@@ -1,81 +1,143 @@
 #include <iostream>
+#include <limits>
+#include <string>
+
 #include "Data.h"
 using namespace std;
 using namespace ns;
 
+MovieList movies;
+
+string getMovieCode();
+string getMovieTitle();
+string getMovieGenre();
+int getMovieYear();
+int getChoice();
 int menu();
+void clear();
 
-int main()
+string getMovieCode()
 {
-	FloatList list;
-	float num;
-	int ch;
+	string code;
+	cout << "Enter the Movie code: ";
+	getline(cin >> ws, code);
+	return code;
+}
 
-	do
+string getMovieTitle()
+{
+	string title;
+	cout << "Enter the Movie title: ";
+	getline(cin >> ws, title);
+	return title;
+}
+
+string getMovieGenre()
+{
+	string genre;
+	cout << "Enter the Movie genre: ";
+	getline(cin >> ws, genre);
+	return genre;
+}
+
+int getMovieYear()
+{
+	int year;
+	cout << "Enter the Movie released year: ";
+	cin >> year;
+	if (cin.fail() || year < 1800 || year > 2021)
 	{
-		ch = menu();
-		//system("clear");
-		if (ch == 1)
-		{
-			cout << " << Appending a Node >> " << endl
-					 << endl;
-			cout << "Enter a float number: ";
-			cin >> num;
-			list.appendNode(num);
-		}
-		else if (ch == 2)
-		{
-			cout << " << Inserting a Node >> " << endl
-					 << endl;
-			cout << "Enter a float number to INSERT: ";
-			cin >> num;
-			list.insertNode(num);
-		}
-		else if (ch == 3)
-		{
-			cout << " << Deleting a Node >> " << endl
-					 << endl;
-			cout << "Enter a float number to DELETE: ";
-			cin >> num;
-			list.deleteNode(num);
-		}
+		cin.clear();
+		cout << "Invalid input. Please enter a valid year.\n\n";
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		return getMovieYear();
+	}
+	return year;
+}
 
-		else if (ch == 4)
-		{
-			cout << " << Traversing the List >> " << endl
-					 << endl;
-			list.displayList();
-			system("sleep 3s");
-		}
-		else if (ch == 5)
-		{
-			cout << "Thank you for using the program!" << endl;
-			list.~FloatList();
-			exit(0);
-		}
-		else
-		{
-			cout << "Invalid Input!" << endl
-					 << endl;
-			break;
-		}
-		cout << endl;
-	} while (ch >= 1 && ch <= 5);
+int getChoice()
+{
+	int choice;
+	cout << "\nEnter your choice: ";
+	cin >> choice;
+	if (cin.fail() || choice < 1 || choice > 6)
+	{
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Invalid choice. Please try again." << endl;
+		return getChoice();
+	}
+	clear();
+	return choice;
 }
 
 int menu()
 {
-	int ch;
-	system("clear");
-	cout << " << Linked List Demonstration >> " << endl
-			 << endl;
-	cout << "[1] Append a Node" << endl;
-	cout << "[2] Inserting a Node" << endl;
-	cout << "[3] Deleting a Node" << endl;
-	cout << "[4] Traversing the List" << endl;
-	cout << "[5] Quit the Program" << endl
-			 << endl;
-	cout << "Enter Choice: ";
-	cin >> ch;
-	return (ch);
+	cout << " << Main Menu >> \n\n";
+	cout << "[1] Insert a New Movie" << endl;
+	cout << "[2] Rent a Movie" << endl;
+	cout << "[3] Return a Movie" << endl;
+	cout << "[4] Show Movie Details" << endl;
+	cout << "[5] Print Movie List" << endl;
+	cout << "[6] Quit the program" << endl;
+
+	return getChoice();
+}
+void clear()
+{
+	if (system("CLS"))
+		system("clear");
+}
+
+int main()
+{
+	string code, title, genre;
+	int year;
+
+	clear();
+
+	while (true)
+	{
+		switch (menu())
+		{
+		case 1:
+			cout << " << Insert a New Movie >> \n\n";
+			code = getMovieCode();
+			title = getMovieTitle();
+			genre = getMovieGenre();
+			year = getMovieYear();
+			clear();
+			movies.insertMovie(code, title, genre, year);
+			break;
+		case 2:
+			cout << " << Rent a Movie >> \n\n";
+			code = getMovieCode();
+			clear();
+			movies.rentMovie(code);
+			break;
+		case 3:
+			cout << " << Return a Movie >> \n\n";
+			code = getMovieCode();
+			title = getMovieTitle();
+			genre = getMovieGenre();
+			year = getMovieYear();
+			clear();
+			movies.returnMovie(code, title, genre, year);
+			break;
+		case 4:
+			cout << " << Movie Details >> \n\n";
+			code = getMovieCode();
+			movies.showMovieDetails(code);
+			break;
+		case 5:
+			cout << " << Movie List >> \n\n";
+			movies.printMovieList();
+			break;
+		case 6:
+			cout << " << Thank you for using our program. >> " << endl;
+			return 0;
+		default:
+			break;
+		}
+	}
 }

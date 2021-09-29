@@ -2,25 +2,33 @@
 #ifndef _DATA_H_
 #define _DATA_H_
 
+#include <iostream>
+#include <string>
+using namespace std;
+
 namespace ns
 {
-	class FloatList
+	class MovieList
 	{
 	private:
-		struct ListNode
+		struct Node
 		{
-			float value;
-			struct ListNode *next;
+			std::string code;
+			std::string title;
+			std::string genre;
+			int year;
+			struct Node *next;
 		};
-		ListNode *head;
+		Node *head;
 
 	public:
-		FloatList();
-		~FloatList();
-		void appendNode(float num);
-		void insertNode(float num);
-		void deleteNode(float num);
-		void displayList();
+		MovieList();
+		~MovieList();
+		void insertMovie(std::string code, std::string title, std::string genre, int year);
+		void rentMovie(std::string code);
+		void returnMovie(std::string code, std::string title, std::string genre, int year);
+		void showMovieDetails(std::string code);
+		void printMovieList();
 	};
 }
 

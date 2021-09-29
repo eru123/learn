@@ -4,14 +4,16 @@
 using namespace std;
 using namespace ns;
 
-FloatList::FloatList()
+// Constructor
+MovieList::MovieList()
 {
   head = NULL;
 }
 
-FloatList::~FloatList()
+// destructor
+MovieList::~MovieList()
 {
-  ListNode *nodePtr, *nextNode;
+  Node *nodePtr, *nextNode;
 
   nodePtr = head;
   while (nodePtr != NULL)
@@ -20,141 +22,125 @@ FloatList::~FloatList()
     delete nodePtr;
     nodePtr = nextNode;
   }
-  cout << "Linked List has been destroyed!" << endl;
+
+  cout << "Movies List has been destroyed!\n\n";
 }
 
-void FloatList::appendNode(float num)
+// prepend a new node to the beginning of the list
+void MovieList::insertMovie(string code, string title, string genre, int year)
 {
-  ListNode *newNode, *nodePtr;
-  // Allocate a new node & store num
-  newNode = new ListNode;
-  newNode->value = num;
-  newNode->next = NULL;
-  // If there are no nodes in the list
-  // make newNode the first node
-  if (!head)
-    head = newNode;
-  else // Otherwise, insert newNode at end
+  Node *newNode;
+
+  newNode = new Node;
+  newNode->code = code;
+  newNode->title = title;
+  newNode->genre = genre;
+  newNode->year = year;
+  newNode->next = head;
+  head = newNode;
+
+  cout << "\nA Movie has been added!\n\n";
+}
+
+// deletes a node from the list
+void MovieList::rentMovie(string code)
+{
+  Node *nodePtr, *previousNode;
+  nodePtr = head;
+  previousNode = NULL;
+
+  while (nodePtr != NULL)
   {
-    // Initialize nodePtr to head of list
-    nodePtr = head;
-    // Find the last node in the list
-    while (nodePtr->next)
-      nodePtr = nodePtr->next;
-    // Insert newNode as the last node
-    nodePtr->next = newNode;
+    if (nodePtr->code == code)
+    {
+      if (previousNode != NULL && nodePtr->next != NULL)
+        previousNode->next = nodePtr->next;
+      else if (previousNode != NULL && nodePtr->next == NULL)
+        previousNode->next = NULL;
+      else if (previousNode == NULL && nodePtr->next != NULL)
+        head = nodePtr->next;
+      else
+        head = NULL;
+
+      delete nodePtr;
+      cout << "\nA Movie has been rented!\n\n";
+      return;
+    }
+
+    previousNode = nodePtr;
+    nodePtr = nodePtr->next;
   }
-  cout << endl
-       << "Input has been successfully Appended!" << endl;
+  cout << "Movie not found!\n\n";
 }
 
-void FloatList::displayList()
+// append a new node to the end of the list
+void MovieList::returnMovie(string code, string title, string genre, int year)
 {
-  ListNode *nodePtr;
+  Node *newNode, *nodePtr;
+
+  newNode = new Node;
+  newNode->code = code;
+  newNode->title = title;
+  newNode->genre = genre;
+  newNode->year = year;
+  newNode->next = NULL;
+
   if (head == NULL)
-    cout << "The list is empty!" << endl;
+  {
+    head = newNode;
+  }
   else
   {
-    cout << "The nodes in the List are... " << endl;
+    nodePtr = head;
+    while (nodePtr->next != NULL)
+    {
+      nodePtr = nodePtr->next;
+    }
+    nodePtr->next = newNode;
+  }
+  cout << "\nA Movie has been returned\n\n";
+}
+
+// search and display a node
+void MovieList::showMovieDetails(string code)
+{
+  Node *nodePtr;
+  nodePtr = head;
+
+  while (nodePtr != NULL)
+  {
+    if (nodePtr->code == code)
+    {
+      cout << "Movie found: \n\n";
+      cout << "Code     : " << nodePtr->code << endl;
+      cout << "Title    : " << nodePtr->title << endl;
+      cout << "Genre    : " << nodePtr->genre << endl;
+      cout << "Released : " << nodePtr->year << "\n\n";
+      return;
+    }
+    nodePtr = nodePtr->next;
+  }
+  cout << "Movie not found!\n\n";
+}
+
+// display the list
+void MovieList::printMovieList()
+{
+  Node *nodePtr;
+  if (head == NULL)
+  {
+    cout << "No record\n\n";
+  }
+  else
+  {
     nodePtr = head;
     while (nodePtr)
     {
-      cout << nodePtr->value << endl;
+      cout << "Code     : " << nodePtr->code << endl;
+      cout << "Title    : " << nodePtr->title << endl;
+      cout << "Genre    : " << nodePtr->genre << endl;
+      cout << "Released : " << nodePtr->year << "\n\n";
       nodePtr = nodePtr->next;
     }
   }
-}
-
-void FloatList::insertNode(float num)
-{
-  ListNode *newNode, *nodePtr, *previousNode;
-
-  // Allocate a new node & store Num
-  newNode = new ListNode;
-  newNode->value = num;
-
-  // If there are no nodes in the list
-  // make newNode the first node
-  if (!head)
-  {
-    head = newNode;
-    newNode->next = NULL;
-  }
-  else // Otherwise, insert newNode.
-  {
-    // Initialize nodePtr to head of list
-    nodePtr = head;
-    previousNode = NULL;
-
-    // Skip all nodes whose value member is less
-    // than num.
-    while (nodePtr != NULL && nodePtr->value < num)
-    {
-      previousNode = nodePtr;
-      nodePtr = nodePtr->next;
-    }
-    // If the new mode is to be the 1st in the list,
-    // insert it before all other nodes.
-    if (previousNode == NULL)
-    {
-      head = newNode;
-      newNode->next = nodePtr;
-    }
-    else
-    {
-      previousNode->next = newNode;
-      newNode->next = nodePtr;
-    }
-  }
-  cout << endl
-       << "Input has been successfully Inserted!" << endl;
-}
-
-void FloatList::deleteNode(float num)
-{
-  ListNode *nodePtr, *previousNode;
-  int found = 0;
-
-  // If the list is empty, do nothing.
-  if (!head)
-  {
-    cout << "List is empty!" << endl;
-    return;
-  }
-
-  // Determine if the first node is the one.
-  if (head->value == num)
-  {
-    nodePtr = head->next;
-    delete head;
-    head = nodePtr;
-    cout << "Input has been successfully DELETED!" << endl;
-    found = 1;
-  }
-  else
-  {
-    // Initialize nodePtr to head of list
-    nodePtr = head;
-    previousNode = NULL;
-
-    // Skip all nodes whose value member is
-    // not equal to num.
-    while (nodePtr != NULL && nodePtr->value != num)
-    {
-      previousNode = nodePtr;
-      nodePtr = nodePtr->next;
-    }
-
-    // Link the previous node to the node after
-    // nodePtr, then delete nodePtr.
-    if (nodePtr != NULL)
-    {
-      previousNode->next = nodePtr->next;
-      delete nodePtr;
-      cout << "Input has been successfully DELETED!" << endl;
-      found = 1;
-    }
-  }
-  if (found == 0)
-    cout << "Input is not found in the list!" << endl;
 }
