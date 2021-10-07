@@ -10,53 +10,58 @@
 #include <cstdlib>
 #define MAX_ADDRESS_LENGTH 100
 using namespace std;
- void menu();
-    void insert();
-    void display();
-    void modify();
-    void search();
-    void deleted();
-	
+void menu();
+void insert();
+void display();
+void modify();
+void search();
+void deleted();
+
 struct StudentRec
 {
-	char address[MAX_ADDRESS_LENGTH];
-	string numID;
-	string name;
-	string bday;
-	string gender;		
-	string degree;
-	string yearLevel;
-	StudentRec *next;
-}studentInfo;
+    char address[MAX_ADDRESS_LENGTH];
+    string numID;
+    string name;
+    string bday;
+    string gender;
+    string degree;
+    string yearLevel;
+    StudentRec *next;
+} studentInfo;
 
 void MainMenu()
 {
-	menustart:
-	int choice;
+menustart:
+    int choice;
     char x;
-	system("cls");
-	cout << " \n \n -------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-	cout << "\t \t \t \t      Good Day Mr. Calleja and Mr. Ramos! Welcome to group Uniquelo's Student Information Program! " << endl;
-	cout << " -------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-	cout <<  endl<< endl<<endl;
-	cout << "\t \t \t \t ============================================================================================"<<endl;
-	cout << "\t \t \t \t || \t \t \t \t      M  A  I  N    M  E  N  U                             ||"<<endl;
-	cout << "\t \t \t \t ||----------------------------------------------------------------------------------------||" << endl;
-	cout << "\t \t \t \t || \t \t \t \t \t \t                                           ||"<<endl;
-	cout << "\t \t \t \t || \t Add New Record: \t \t \t \t \t \t Enter 1           ||" << endl;
-	cout <<"\t \t \t \t || \t \t \t \t \t \t                                           ||"<<endl;
-	cout << "\t \t \t \t || \t Display Record: \t \t \t \t \t \t Enter 2           ||" << endl;
-	cout <<" \t \t \t \t || \t \t \t \t \t \t                                           ||"<<endl;
-	cout << "\t \t \t \t || \t Modify Record : \t \t \t \t \t \t Enter 3           ||" << endl;
-	cout <<" \t \t \t \t || \t \t \t \t \t \t                                           ||"<<endl;
-	cout << "\t \t \t \t || \t Search Record : \t \t \t \t \t \t Enter 4           ||" << endl;
-	cout <<" \t \t \t \t || \t \t \t \t \t \t                                           ||"<<endl;
-	cout << "\t \t \t \t || \t Delete Record : \t \t \t \t \t \t Enter 5           ||" << endl;
-	cout <<" \t \t \t \t || \t \t \t \t \t \t                                           ||"<<endl;
-	cout << "\t \t \t \t || \t Exit Program  : \t \t \t \t \t \t Enter 6           ||" << endl;
-    cout <<	"\t \t \t \t ============================================================================================"<<endl<<endl<<endl<<endl;
-    cout << "\t \t \t \t   Please type your selection:   "; 
-     cin >> choice;
+    system("cls");
+    cout << " \n \n -------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout << "\t \t \t \t      Good Day Mr. Calleja and Mr. Ramos! Welcome to group Uniquelo's Student Information Program! " << endl;
+    cout << " -------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout << endl
+         << endl
+         << endl;
+    cout << "\t \t \t \t ============================================================================================" << endl;
+    cout << "\t \t \t \t || \t \t \t \t      M  A  I  N    M  E  N  U                             ||" << endl;
+    cout << "\t \t \t \t ||----------------------------------------------------------------------------------------||" << endl;
+    cout << "\t \t \t \t || \t \t \t \t \t \t                                           ||" << endl;
+    cout << "\t \t \t \t || \t Add New Record: \t \t \t \t \t \t Enter 1           ||" << endl;
+    cout << "\t \t \t \t || \t \t \t \t \t \t                                           ||" << endl;
+    cout << "\t \t \t \t || \t Display Record: \t \t \t \t \t \t Enter 2           ||" << endl;
+    cout << " \t \t \t \t || \t \t \t \t \t \t                                           ||" << endl;
+    cout << "\t \t \t \t || \t Modify Record : \t \t \t \t \t \t Enter 3           ||" << endl;
+    cout << " \t \t \t \t || \t \t \t \t \t \t                                           ||" << endl;
+    cout << "\t \t \t \t || \t Search Record : \t \t \t \t \t \t Enter 4           ||" << endl;
+    cout << " \t \t \t \t || \t \t \t \t \t \t                                           ||" << endl;
+    cout << "\t \t \t \t || \t Delete Record : \t \t \t \t \t \t Enter 5           ||" << endl;
+    cout << " \t \t \t \t || \t \t \t \t \t \t                                           ||" << endl;
+    cout << "\t \t \t \t || \t Exit Program  : \t \t \t \t \t \t Enter 6           ||" << endl;
+    cout << "\t \t \t \t ============================================================================================" << endl
+         << endl
+         << endl
+         << endl;
+    cout << "\t \t \t \t   Please type your selection:   ";
+    cin >> choice;
     switch (choice)
     {
     case 1:
@@ -93,29 +98,36 @@ void insert() // add student details
     system("cls");
     fstream file;
     StudentRec rec;
-	cout<<"---------- ADD SUDENT RECORD ----------"<<endl;
-	cout<<"Student Full Name: ";
-	cin.ignore();
-	getline(cin,rec.name);
-	cout<<"Student ID Number: ";
-	cin>>rec.numID;
-	cin.ignore();
-	cout<<"Birthday (mm/dd/yy): ";
-	cin>>rec.bday;
-	cout<<"Gender: ";
-	cin>>rec.gender;
-	cin.ignore();		
-	cout<<"Address: ";	
-	cin.getline (rec.address, MAX_ADDRESS_LENGTH);
-	cout<<"Degree Program: ";
-	cin>>rec.degree;
-	cin.ignore();
-	cout<<"Year Level (1st, 2nd...): ";
-	getline(cin,rec.yearLevel);
-	cout<< "\nThe record is sucessfully added! \n";
-	
-	file.open("studentRecord.txt", ios::app | ios::out);
-	file << "\n" << rec.name << "\n" << rec.numID << "\n" << rec.bday << "\n" << rec.gender << "\n" << rec.address << "\n" << rec.degree << "\n" << rec.yearLevel <<endl;
+    cout << "---------- ADD SUDENT RECORD ----------" << endl;
+    cout << "Student Full Name: ";
+    cin.ignore();
+    getline(cin, rec.name);
+    cout << "Student ID Number: ";
+    cin >> rec.numID;
+    cin.ignore();
+    cout << "Birthday (mm/dd/yy): ";
+    cin >> rec.bday;
+    cout << "Gender: ";
+    cin >> rec.gender;
+    cin.ignore();
+    cout << "Address: ";
+    cin.getline(rec.address, MAX_ADDRESS_LENGTH);
+    cout << "Degree Program: ";
+    cin >> rec.degree;
+    cin.ignore();
+    cout << "Year Level (1st, 2nd...): ";
+    getline(cin, rec.yearLevel);
+    cout << "\nThe record is sucessfully added! \n";
+
+    file.open("studentRecord.txt", ios::app | ios::out);
+    file << "\n"
+         << rec.name << "\n"
+         << rec.numID << "\n"
+         << rec.bday << "\n"
+         << rec.gender << "\n"
+         << rec.address << "\n"
+         << rec.degree << "\n"
+         << rec.yearLevel << endl;
     file.close();
 }
 
@@ -176,12 +188,19 @@ void modify() // Modify Students Details
         cout << "\nEnter Student Number of Student which you want to Modify: ";
         cin >> numID;
         file1.open("record.txt", ios::app | ios::out);
-        file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >>rec.yearLevel;
+        file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
         while (!file.eof())
         {
             if (numID != rec.numID)
 
-                file1 << "\n" << rec.name << "\n" << rec.numID << "\n" << rec.bday << "\n" << rec.gender<< "\n" << rec.address << "\n" << rec.degree << "\n" << rec.yearLevel <<endl;
+                file1 << "\n"
+                      << rec.name << "\n"
+                      << rec.numID << "\n"
+                      << rec.bday << "\n"
+                      << rec.gender << "\n"
+                      << rec.address << "\n"
+                      << rec.degree << "\n"
+                      << rec.yearLevel << endl;
             else
             {
                 cout << "\n\t\t\tEnter Name: ";
@@ -193,15 +212,21 @@ void modify() // Modify Students Details
                 cout << "\t\t\tEnter Gender: ";
                 cin >> rec.gender;
                 cout << "\t\t\tEnter Address: ";
-                cin >> rec.address ;
+                cin >> rec.address;
                 cout << "\t\t\Enter Degree: ";
                 cin >> rec.degree;
                 cout << "\t\t\tEnter Yearlevel: ";
                 cin >> rec.yearLevel;
-                file1 << "\n" << rec.name << "\n" << rec.numID << "\n" << rec.bday << "\n" << rec.gender << "\n" << rec.address << "\n" << rec.degree << "n" << rec.yearLevel <<endl;
+                file1 << "\n"
+                      << rec.name << "\n"
+                      << rec.numID << "\n"
+                      << rec.bday << "\n"
+                      << rec.gender << "\n"
+                      << rec.address << "\n"
+                      << rec.degree << "n" << rec.yearLevel << endl;
                 found++;
             }
-            file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel; 
+            file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
             if (found == 0)
             {
                 cout << "\n\n\t\t\t Student Roll No. Not Found....";
@@ -234,21 +259,21 @@ void search() // search data of student
         cout << "------------------------------------- Student Search Data ------------------------------------------" << endl;
         cout << "\n Enter Roll No. of Student Which You Want to Search: ";
         cin >> numID;
-        file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel; 
+        file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
         while (!file.eof())
         {
             if (numID == rec.numID)
             {
                 cout << "\t\t\t Student Name: " << rec.name << endl;
-	            cout << "\t\t\t ID number   : " << rec.numID << endl;
-	            cout << "\t\t\t Degree      : " << rec.degree << endl;
-	            cout << "\t\t\t Gender      : " << rec.gender << endl;
-	            cout << "\t\t\t Birthday    : " << rec.bday << endl;
-	            cout << "\t\t\t Year Level  : " << rec.yearLevel << endl;
-	            cout << "\t\t\t Student Address: " << rec.address << endl;
+                cout << "\t\t\t ID number   : " << rec.numID << endl;
+                cout << "\t\t\t Degree      : " << rec.degree << endl;
+                cout << "\t\t\t Gender      : " << rec.gender << endl;
+                cout << "\t\t\t Birthday    : " << rec.bday << endl;
+                cout << "\t\t\t Year Level  : " << rec.yearLevel << endl;
+                cout << "\t\t\t Student Address: " << rec.address << endl;
                 found++;
             }
-            file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel; 
+            file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
         }
         if (found == 0)
         {
@@ -278,19 +303,26 @@ void deleted()
         cout << "\nEnter Student Number of Student which you want Delete Data: ";
         cin >> roll;
         file1.open("record.txt", ios::app | ios::out);
-      	file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
+        file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
         while (!file.eof())
         {
             if (roll != rec.numID)
             {
-                 file1 << "\n" << rec.name << "\n" << rec.numID << "\n" << rec.bday << "\n" << rec.gender<< "\n" << rec.address << "\n" << rec.degree << "\n" << rec.yearLevel <<endl;
+                file1 << "\n"
+                      << rec.name << "\n"
+                      << rec.numID << "\n"
+                      << rec.bday << "\n"
+                      << rec.gender << "\n"
+                      << rec.address << "\n"
+                      << rec.degree << "\n"
+                      << rec.yearLevel << endl;
             }
             else
             {
                 found++;
                 cout << "\n\t\t\tSuccessfully Delete Data";
             }
-           file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel; 
+            file >> rec.name >> rec.numID >> rec.bday >> rec.gender >> rec.address >> rec.degree >> rec.yearLevel;
         }
         if (found == 0)
         {

@@ -3,17 +3,17 @@
 using namespace std;
 
 string places[11] = {
-	"La Paz",
-	"Victoria",
-	"Gerona",
-	"Paniqui",
-	"Moncada",
-	"Carmen",
-	"Urdaneta",
-	"Binalonan",
-	"Pozorrubio",
-	"Sison",
-	"Rosario"
+		"La Paz",
+		"Victoria",
+		"Gerona",
+		"Paniqui",
+		"Moncada",
+		"Carmen",
+		"Urdaneta",
+		"Binalonan",
+		"Pozorrubio",
+		"Sison",
+		"Rosario"
 };
 
 double prices[11][11] = {
@@ -30,36 +30,41 @@ double prices[11][11] = {
 	{778,702,632,581,531,368,238,191,103, 52,  0,},
 };
 
+int placesMenu(string message)
+{
+	cout << "Available Stops" << endl;
 
-int placesMenu(string message){
-	cout << "Available Stops" <<endl;
-	
 	int i;
-	for(i =0;i < 11;i++){
+	for (i = 0; i < 11; i++)
+	{
 		cout << (i + 1) << ". " << places[i] << endl;
 	}
-	
+
 	int in;
-	cout << "\n" << message ;
+	cout << "\n"
+			 << message;
 	cin >> in;
-	
+
 	in -= 1;
-	
-	if(in < 0 || in > 10){
+
+	if (in < 0 || in > 10)
+	{
 		cout << "Invalid Input!" << endl;
 		return placesMenu(message);
-	} else {
+	}
+	else
+	{
 		return in;
 	}
 }
 
-int main(){
-	
+int main()
+{
+
 	int entry = placesMenu("Entry Location\nEnter number: ");
 	int exit = placesMenu("Exit Location\nEnter number: ");
-	
+
 	double fee = prices[entry][exit];
-	
-	cout << "Fee: " << fee <<endl;
-	
+
+	cout << "Fee: " << fee << endl;
 }

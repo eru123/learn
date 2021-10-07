@@ -10,6 +10,6 @@ int main()
 	{
 		cout << motorcycles[n] << endl;
 	}
-	
+
 	return 0;
 }
