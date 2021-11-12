@@ -44,7 +44,7 @@ public class MainMenu {
         while (true) {
             System.out.println(this.title + "\n");
             for (int i = 0; i < this.options.length; i++) {
-                if(this.options[i] != null || this.options[i] != "") {
+                if(this.options[i] != null &&  this.options[i] != "") {
                     System.out.println(i + 1 + ". " + this.options[i]);
                     counter++;
                 }
