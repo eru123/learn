@@ -69,3 +69,12 @@ Employee
 -name
 -password
 ```
+
+**Update**
+```txt
+sa main menu ng employee tatlo nalang
+
+order status
+view checkout order
+return to main menu
+```

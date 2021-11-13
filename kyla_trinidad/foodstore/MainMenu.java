@@ -24,15 +24,16 @@ public class MainMenu {
     public String customer_name[] = new String[MAX_ID];
 
     // transaction
-    public int transaction_id[] = new int[MAX_ID];
-    public String transaction_date[] = new String[MAX_ID];
-    public String transaction_time[] = new String[MAX_ID];
-    public int transaction_customer_id[] = new int[MAX_ID];
+    // name,address,phone,restaurant,orders,quantities,is delivered,is paid,employee id
+    public String transaction_name[] = new String[MAX_ID];
+    public String transaction_address[] = new String[MAX_ID];
+    public String transaction_phone[] = new String[MAX_ID];
+    public String transaction_restaurant[] = new String[MAX_ID];
+    public int transaction_orders[][] = new int[MAX_ID][MAX_ID];
+    public int transaction_quantities[][] = new int[MAX_ID][MAX_ID];
+    public boolean transaction_isDelivered[] = new boolean[MAX_ID];
+    public boolean transaction_isPaid[] = new boolean[MAX_ID];
     public int transaction_employee_id[] = new int[MAX_ID];
-    public int transaction_item_id[] = new int[MAX_ID];
-    public int transaction_quantity[] = new int[MAX_ID];
-    public int transaction_price[] = new int[MAX_ID];
-    public int transaction_total[] = new int[MAX_ID];
 
     // food
     public int food_id[] = new int[MAX_ID];
@@ -114,6 +115,54 @@ public class MainMenu {
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println("food.txt File not found\n");
+        }
+    }
+
+    // load data from transaction.txt
+    public void loadTransactionData() {
+        this.transaction_name = new String[MAX_ID];
+        this.transaction_address = new String[MAX_ID];
+        this.transaction_phone = new String[MAX_ID];
+        this.transaction_restaurant = new String[MAX_ID];
+        this.transaction_orders = new int[MAX_ID][MAX_ID];
+        this.transaction_quantities = new int[MAX_ID][MAX_ID];
+        this.transaction_isDelivered = new boolean[MAX_ID];
+        this.transaction_isPaid = new boolean[MAX_ID];
+        this.transaction_employee_id = new int[MAX_ID];
+
+        try {
+            Scanner input = new Scanner(new File("transaction.txt"));
+            int i = 0;
+            while (input.hasNext()) {
+                String line[] = input.nextLine().split(",");
+                if(line[0] != ""){
+                    this.transaction_name[i] = line[0];
+                    this.transaction_address[i] = line[1];
+                    this.transaction_phone[i] = line[2];
+                    this.transaction_restaurant[i] = line[3];
+                    this.transaction_isDelivered[i] = Boolean.parseBoolean(line[6]);
+                    this.transaction_isPaid[i] = Boolean.parseBoolean(line[7]);
+                    this.transaction_employee_id[i] = Integer.parseInt(line[8]);
+                    
+                    String orders_str[] = line[4].split(" ");
+                    int orders[] = new int[orders_str.length];
+                    for (int j = 0; j < orders_str.length; j++) {
+                        orders[j] = Integer.parseInt(orders_str[j]);
+                    }
+                    this.transaction_orders[i] = orders;
+                    
+                    String quantities_str[] = line[5].split(" ");
+                    int quantities[] = new int[quantities_str.length];
+                    for (int j = 0; j < quantities_str.length; j++) {
+                        quantities[j] = Integer.parseInt(quantities_str[j]);
+                    }
+                    this.transaction_quantities[i] = quantities;
+                    i++;
+                }
+            }
+            input.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("transaction.txt File not found\n");
         }
     }
 }

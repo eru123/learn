@@ -11,48 +11,41 @@ public class ITAdministrator extends MainMenu {
         this.loadAdminData();
         this.loadEmployeeData();
         this.loadFoodData();
+        this.loadTransactionData();
         this.login();
 
         while (this.is_login) {
             this.title = "IT ADMINISTRATOR MENU";
             this.options = new String[] { "Add Food to Menu", "Update Menu", "Delete Food to Menu", "View Foods",
                     "Transaction History", "Add Employee", "Delete Employee", "View Customers", "View Employees",
-                    "Exit" };
+                    "Return to Main Menu" };
             int choice = this.menu();
+            assert choice >= 0 && choice < this.options.length;
+            this.clearScreen();
             switch (choice) {
             case 0:
-                this.clearScreen();
                 this.addFood();
                 break;
             case 1:
-                this.clearScreen();
                 this.updateFood();
                 break;
             case 2:
-                this.clearScreen();
                 this.deleteFood();
                 break;
             case 3:
-                this.clearScreen();
                 this.viewFoods();
                 break;
             case 4:
-                this.clearScreen();
-                // this.viewTransactions();
-                System.out.println("Transaction History: Not yet done\n");
+                this.viewTransactions();
                 break;
             case 5:
-                this.clearScreen();
                 this.addEmployee();
                 break;
             case 6:
-                this.clearScreen();
                 this.deleteEmployee();
                 break;
             case 7:
-                this.clearScreen();
-                // this.viewCustomers();
-                System.out.println("View Customers: Not yet done\n");
+                this.viewCustomers();
                 break;
             case 8:
                 this.clearScreen();
@@ -74,6 +67,8 @@ public class ITAdministrator extends MainMenu {
         int id = Integer.parseInt(console.readLine("Enter Food ID: "));
         String name = console.readLine("Enter Food Name: ");
         double price = Double.parseDouble(console.readLine("Enter Food Price: "));
+
+        assert id > 0;
 
         this.clearScreen();
 
@@ -196,6 +191,8 @@ public class ITAdministrator extends MainMenu {
         String phone = console.readLine("Enter employee phone: ");
         String address = console.readLine("Enter employee address: ");
 
+        assert id > 0;
+
         this.clearScreen();
 
         for (int i = 0; i < this.employee_id.length; i++) {
@@ -274,6 +271,64 @@ public class ITAdministrator extends MainMenu {
         System.out.println("-----------------------------\n");
     }
 
+    public void viewTransactions() {
+        System.out.println("Transaction History\n");
+        for (int i = 0; i < this.transaction_name.length; i++) {
+            if(this.transaction_name[i] != null) {
+                if(!this.transaction_name[i].equals("")){
+                    System.out.println("-----------------------------------");
+                    System.out.println("RECEIPT\n");
+                    System.out.println("Delivery Status: " + (this.transaction_isDelivered[i] ? "Delivered" : "Pending"));
+                    System.out.println("Payment Status: " + (this.transaction_isPaid[i] ? "Paid" : "Pending"));
+                    System.out.println("Name: " + this.transaction_name[i]);
+                    System.out.println("Address: " + this.transaction_address[i]);
+                    System.out.println("Phone Number: " + this.transaction_phone[i]);
+                    System.out.println("Restaurant: " + this.transaction_restaurant[i]);
+                    System.out.println("Orders: ");
+            
+                    double total = 0;
+            
+                    for(int j = 0; j < this.transaction_orders[i].length; j++){
+                        int f_id = this.transaction_orders[i][j];
+                        int f_qty = this.transaction_quantities[i][j];
+                        String f_name = "(Deleted Food)";
+                        double f_price = 0;
+
+                        for(int k = 0; k < this.food_id.length; k++){
+                            if(this.food_id[k] == f_id){
+                                f_name = this.food_name[k];
+                                f_price = this.food_price[k];
+                                break;
+                            }
+                        }
+
+                        total += f_price;
+                        System.out.println("  " + (j + 1) + ". " + f_name + " x" + f_qty + " - PHP " + f_price);
+                    }
+            
+                    System.out.println("\n  Total: PHP " + total);
+                    System.out.println("-----------------------------------\n");
+                }
+            }
+        }
+    }
+
+    public void viewCustomers() {
+        System.out.println("View Customers\n");
+        for (int i = 0; i < this.transaction_name.length; i++) {
+            // display trasaction name,address,phone
+            if (this.transaction_name[i] != null) {
+                if(!this.transaction_name[i].equals("")){
+                    System.out.println(
+                    "Customer name: " + this.transaction_name[i] + "\n" +
+                    "Customer address: " + this.transaction_address[i] + "\n" + 
+                    "Customer phone: " + this.transaction_phone[i] + "\n");
+                }
+            }
+        }
+        System.out.println("-----------------------------\n");
+    }
+
     public void login() {
         System.out.println("IT ADMINISTRATOR LOGIN\n");
         
@@ -326,13 +381,15 @@ public class ITAdministrator extends MainMenu {
     public void register() {
         System.out.println("IT ADMINISTRATOR REGISTRATION\n");
         
-        String user_id = console.readLine("Admin ID: ");
+        int user_id = Integer.parseInt(console.readLine("Admin ID: ")) ;
         String name = console.readLine("Name: ");
         String password = console.readLine("Password: ");
         String confirm_password = console.readLine("Confirm password: ");
 
+        assert user_id > 0;
+
         for (int i = 0; i < 100; i++) {
-            if (this.admin_id[i] == Integer.parseInt(user_id)) {
+            if (this.admin_id[i] == user_id) {
                 this.clearScreen();
                 System.out.println("User id is already exist.\n");
                 return;

@@ -19,8 +19,10 @@ public class Customer extends MainMenu {
 
         while(run){
             this.title = "WELCOME TO EMERLU";
-            this.options = new String[]{"Add Order", "Edit Order", "Delete Order", "View Orders/Receipt", "Checkout", "Exit"};
+            this.options = new String[]{"Add Order", "Edit Order", "Delete Order", "View Orders/Receipt", "Checkout", "Return to Main Menu"};
             int choice = this.menu();
+            assert choice >= 0 && choice < this.options.length;
+
             switch (choice) {
                 case 0:
                     this.addOrder();
@@ -41,7 +43,9 @@ public class Customer extends MainMenu {
                     run = false;
                     break;
             }
-        }        
+        }
+        
+        assert run == false;
     }
 
     public void ask(){
@@ -65,6 +69,13 @@ public class Customer extends MainMenu {
         }
 
         int choice;
+
+        if(counter == 0){
+            this.clearScreen();
+            System.out.println("No food available");
+            return;
+        }
+
         System.out.println();
         do {
             choice = Integer.parseInt(console.readLine("Enter the number: "));
@@ -135,7 +146,6 @@ public class Customer extends MainMenu {
             }
         }
 
-
         this.title = "Edit more Order?";
         this.options = new String[]{"Yes", "No"};
         choice = this.menu();
@@ -147,7 +157,6 @@ public class Customer extends MainMenu {
         }
     }
 
-    // delete order
     public void deleteOrder(){
         this.clearScreen();
         this.title = "Delete Order";
@@ -283,7 +292,8 @@ public class Customer extends MainMenu {
         if(choice == 0){
             try {
                 FileWriter fw = new FileWriter("transaction.txt", true);
-                fw.write(this.name + "," + this.address + "," + this.phone + "," + this.restaurant + "," + tmp_orders + "," + tmp_qty + ",false,false\n");
+                // name,address,phone,restaurant,orders,quantities,is delivered,is paid,employee id
+                fw.write(this.name + "," + this.address + "," + this.phone + "," + this.restaurant + "," + tmp_orders + "," + tmp_qty + ",false,false,0\n");
                 fw.close();
                 System.out.println("Checkout success\n");
                 return;

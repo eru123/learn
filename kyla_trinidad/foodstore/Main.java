@@ -3,7 +3,7 @@ public class Main {
 
         MainMenu menu = new MainMenu();
         menu.title = "MAIN MENU";
-        menu.options = new String[] { "Admin", "Employee", "Customer", "Exit" };
+        menu.options = new String[] { "Admin", "Employee", "Customer", "Exit Program" };
         menu.clearScreen();
         
         ITAdministrator admin = new ITAdministrator();
