@@ -18,14 +18,6 @@ public class Customer extends MainMenu {
         boolean run = true;
 
         while(run){
-            System.out.println("\n------------------\n");
-            // list all orders
-            for (int i = 0; i < this.orders.length; i++) {
-                if (this.qty[i] != 0) {
-                    System.out.println(i + " | " + this.orders[i] +" | " + this.qty[i]);
-                }
-            }
-            System.out.println("\n------------------\n");
             this.title = "WELCOME TO EMERLU";
             this.options = new String[]{"Add Order", "Edit Order", "Delete Order", "View Orders/Receipt", "Checkout", "Exit"};
             int choice = this.menu();
@@ -37,7 +29,7 @@ public class Customer extends MainMenu {
                     this.editOrder();
                     break;
                 case 2:
-                    // this.deleteOrder();
+                    this.deleteOrder();
                     break;
                 case 3:
                     this.viewOrders();
@@ -78,10 +70,13 @@ public class Customer extends MainMenu {
             choice = Integer.parseInt(console.readLine("Enter the number: "));
         } while (choice < 1 || choice > counter);
         choice -= 1;
-        int qty = Integer.parseInt(console.readLine("Quantity (1): ")) | 1;
+        int qty = Integer.parseInt(console.readLine("Quantity (1): "));
+        if(qty < 1){
+            qty = 1;
+        }
 
         for (int i = 0; i < this.orders.length; i++) {
-            if(this.orders[i] == 0){
+            if(this.qty[i] == 0){
                 this.orders[i] = choice;
                 this.qty[i] = qty;
                 break;
@@ -105,28 +100,41 @@ public class Customer extends MainMenu {
 
     public void editOrder(){
         this.clearScreen();
-        this.title = "My Orders";
+        this.title = "Edit Order";
         this.options = new String[MAX_ID];
 
+        int counter = 0;
         for (int i = 0; i < this.orders.length; i++) {
             if(this.qty[i] != 0){
                 String tmp_name = this.food_name[this.orders[i]];
                 double tmp_price = this.food_price[this.orders[i]];
                 int tmp_qty = this.qty[i];
                 double tmp_total = tmp_price * this.qty[i];
-                this.options[i] = tmp_name + " x" + tmp_qty + " - PHP " + tmp_total;
+                this.options[counter] = tmp_name + " x" + tmp_qty + " - PHP " + tmp_total;
+                counter++;
             }
         }
 
+        if(counter == 0){
+            System.out.println("No orders yet!");
+            return;
+        }
+
         int choice = this.menu();
-        int qty = Integer.parseInt(console.readLine("Quantity ("+ this.qty[choice] +"): ")) | this.qty[choice];
 
-        this.orders[choice] = choice;
-        this.qty[choice] = qty;
+        counter = 0;
+        for (int i = 0; i < this.orders.length; i++) {
+            if(this.qty[i] != 0){
+                if(counter == choice){
+                    this.qty[i] = Integer.parseInt(console.readLine("Quantity ("+ this.qty[i] +"): "));
+                    this.clearScreen();
+                    System.out.println("Order updated!\n");
+                    break;
+                }
+                counter++;
+            }
+        }
 
-        this.clearScreen();
-
-        System.out.println("Order updated!\n");
 
         this.title = "Edit more Order?";
         this.options = new String[]{"Yes", "No"};
@@ -139,28 +147,58 @@ public class Customer extends MainMenu {
         }
     }
 
-    // view orders
-    public void viewOrders(){
+    // delete order
+    public void deleteOrder(){
         this.clearScreen();
-        System.out.println("My Orders\n");
+        this.title = "Delete Order";
+        this.options = new String[MAX_ID];
+
+        int counter = 0;
         for (int i = 0; i < this.orders.length; i++) {
-            if(this.orders[i] != 0){
+            if(this.qty[i] != 0){
                 String tmp_name = this.food_name[this.orders[i]];
                 double tmp_price = this.food_price[this.orders[i]];
                 int tmp_qty = this.qty[i];
-                double tmp_total = tmp_price * tmp_qty;
-                int tmp_idx = i + 1;
-                System.out.println(tmp_idx + ". " + tmp_name + " x" + tmp_qty + " - PHP " + tmp_total);
+                double tmp_total = tmp_price * this.qty[i];
+                this.options[counter] = tmp_name + " x" + tmp_qty + " - PHP " + tmp_total;
+                counter++;
             }
         }
-        System.out.println("\n--------------------------------------\n");
+
+        if(counter == 0){
+            System.out.println("No orders yet!");
+            return;
+        }
+
+        int choice = this.menu();
+
+        counter = 0;
+        for (int i = 0; i < this.orders.length; i++) {
+            if(this.qty[i] != 0){
+                if(counter == choice){
+                    this.qty[i] = 0;
+                    this.clearScreen();
+                    System.out.println("Order deleted!\n");
+                    break;
+                }
+                counter++;
+            }
+        }
+
+        this.title = "Delete more Order?";
+        this.options = new String[]{"Yes", "No"};
+        choice = this.menu();
+        if(choice == 0){
+            this.deleteOrder();
+            return;
+        } else {
+            this.clearScreen();
+        }
     }
 
-    public void checkout(){
+    public void viewOrders(){
         this.clearScreen();
-        System.out.println("CHECKOUT\n");
-
-        System.out.println("-----------------------------------\n");
+        System.out.println("-----------------------------------");
         System.out.println("RECEIPT\n");
         System.out.println("Name: " + this.name);
         System.out.println("Address: " + this.address);
@@ -170,6 +208,7 @@ public class Customer extends MainMenu {
 
         int counter = 0;
         double total = 0;
+
         for(int i = 0; i < this.orders.length; i++){
             if(this.qty[i] != 0){
                 counter++;
@@ -187,7 +226,53 @@ public class Customer extends MainMenu {
         }
 
         System.out.println("\n  Total: PHP " + total);
-        System.out.println("\n-----------------------------------\n");
+        System.out.println("-----------------------------------\n");
+    }
+
+    public void checkout(){
+        this.clearScreen();
+        System.out.println("CHECKOUT\n");
+
+        System.out.println("-----------------------------------");
+        System.out.println("RECEIPT\n");
+        System.out.println("Name: " + this.name);
+        System.out.println("Address: " + this.address);
+        System.out.println("Phone Number: " + this.phone);
+        System.out.println("Restaurant: " + this.restaurant);
+        System.out.println("Orders: ");
+
+        int counter = 0;
+        double total = 0;
+        String tmp_orders = "";
+        String tmp_qty = "";
+
+        for(int i = 0; i < this.orders.length; i++){
+            if(this.qty[i] != 0){
+                counter++;
+                String f_name = this.food_name[this.orders[i]];
+                double f_price = this.food_price[this.orders[i]] * this.qty[i];
+                total += f_price;
+                System.out.println("  " + counter + ". " + f_name + " x" + this.qty[i] + " - PHP " + f_price);
+
+                if(counter == 1){
+                    tmp_orders = this.orders[i] + "";
+                    tmp_qty = this.qty[i] + "";
+                } else {
+                    tmp_orders += " " + this.orders[i];
+                    tmp_qty += " " + this.qty[i];
+                }
+
+            }
+        }
+
+        if(counter <= 0) {
+            this.clearScreen();
+            System.out.println("No orders yet!\n");
+            return;
+        }
+
+        System.out.println("\n  Total: PHP " + total);
+        System.out.println("-----------------------------------\n");
 
         this.title = "Are you sure you want to Checkout?";
         this.options = new String[]{"Yes", "No"};
@@ -198,28 +283,6 @@ public class Customer extends MainMenu {
         if(choice == 0){
             try {
                 FileWriter fw = new FileWriter("transaction.txt", true);
-                String tmp_orders = "";
-                String tmp_qty = "";
-
-                counter = -1;
-                for (int i = 0; i < this.orders.length; i++) {
-                    if(this.qty[i] != 0){
-                        for (int j = 0; j < this.food_id.length; j++) {
-                            int fm_id = this.orders[i];
-                            if (this.food_id[fm_id] != 0 && this.orders[i] == this.food_id[fm_id]) {
-                                counter++;
-                                if(counter == 0){
-                                    tmp_orders = this.food_id[j] + "";
-                                    tmp_qty = this.qty[i] + "";
-                                } else {
-                                    tmp_orders += " " + this.food_id[j];
-                                    tmp_qty += " " + this.qty[i];
-                                }
-                                
-                            }
-                        }
-                    }
-                }
                 fw.write(this.name + "," + this.address + "," + this.phone + "," + this.restaurant + "," + tmp_orders + "," + tmp_qty + ",false,false\n");
                 fw.close();
                 System.out.println("Checkout success\n");
