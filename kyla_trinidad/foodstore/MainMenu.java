@@ -98,6 +98,13 @@ public abstract class MainMenu implements Menu {
             this.employee_name = new String[i];
             this.employee_phone = new String[i];
             this.employee_address = new String[i];
+            
+            for (int j = 0; j < i; j++) {
+                this.employee_id[j] = t_employee_id[j];
+                this.employee_name[j] = t_employee_name[j];
+                this.employee_phone[j] = t_employee_phone[j];
+                this.employee_address[j] = t_employee_address[j];
+            }
 
         } catch (FileNotFoundException e) {
             System.out.println("employee.txt File not found\n");

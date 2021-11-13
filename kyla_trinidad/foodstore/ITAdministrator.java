@@ -275,11 +275,6 @@ public class ITAdministrator extends MainMenu {
     private void viewTransactions() {
         System.out.println("Transaction History\n");
         for (int i = 0; i < this.transaction_name.length; i++) {
-            if (this.transaction_name[i] != null) {
-                
-            }
-        }
-        for (int i = 0; i < this.transaction_name.length; i++) {
             if(this.transaction_name[i] != null) {
                 if(!this.transaction_name[i].equals("")){
                     System.out.println("-----------------------------------");
