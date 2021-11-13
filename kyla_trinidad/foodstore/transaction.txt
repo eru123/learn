@@ -1,0 +1,3 @@
+Jericho,Palawan,4545234235,KFC,1 2 3 1,1000 50 10 22,false,false,0
+Calli,Pangobilian,346546576,Mcdo,1 2 1 3,100 11 50 11,false,false,0
+Lucas,Buligay,7657567575634,Starbucks,1 2 1 3,100 11 50 11,false,false,0

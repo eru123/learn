@@ -61,23 +61,24 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void addFood() {
+    private void addFood() {
         System.out.println("Add Food to Menu\n");
 
         int id = Integer.parseInt(console.readLine("Enter Food ID: "));
+        for (int i = 0; i < this.food_id.length; i++) {
+            if (this.food_id[i] == id) {
+                this.clearScreen();
+                System.out.println("Food ID already exist\n");
+                return;
+            }
+        }
+
         String name = console.readLine("Enter Food Name: ");
         double price = Double.parseDouble(console.readLine("Enter Food Price: "));
 
         assert id > 0;
 
         this.clearScreen();
-
-        for (int i = 0; i < this.food_id.length; i++) {
-            if (this.food_id[i] == id) {
-                System.out.println("Food ID already exist\n");
-                return;
-            }
-        }
 
         for (int i = 0; i < this.food_id.length; i++) {
             if (this.food_id[i] == 0) {
@@ -98,13 +99,13 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void updateFood() {
+    private void updateFood() {
         System.out.println("Update Menu\n");
 
         int id = Integer.parseInt(console.readLine("Enter Food ID: "));
         
         for (int i = 0; i < this.food_id.length; i++) {
-            if (this.food_id[i] == id) {
+            if (this.food_id[i] == id && this.food_id[i] != 0) {
                 String name = console.readLine("Enter Food Name: ");
                 double price = Double.parseDouble(console.readLine("Enter Food Price: "));
 
@@ -135,7 +136,7 @@ public class ITAdministrator extends MainMenu {
 
     }
 
-    public void deleteFood() {
+    private void deleteFood() {
         System.out.println("Delete Food to Menu\n");
 
         Scanner input_int = new Scanner(System.in);
@@ -148,7 +149,7 @@ public class ITAdministrator extends MainMenu {
         this.clearScreen();
 
         for (int i = 0; i < this.food_id.length; i++) {
-            if (this.food_id[i] == id) {
+            if (this.food_id[i] == id && this.food_id[i] != 0) {
                 this.food_id[i] = 0;
                 this.food_name[i] = "";
                 this.food_price[i] = 0;
@@ -171,7 +172,7 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void viewFoods() {
+    private void viewFoods() {
         System.out.println("View Foods\n");
 
         for (int i = 0; i < this.food_id.length; i++) {
@@ -182,25 +183,25 @@ public class ITAdministrator extends MainMenu {
 
         System.out.println("-----------------------------\n");
     }
-
-    public void addEmployee() {
+    
+    private void addEmployee() {
         System.out.println("Add Employee\n");
 
         int id = Integer.parseInt(console.readLine("Enter employee id: "));
+        assert id > 0;
+        for (int i = 0; i < this.employee_id.length; i++) {
+            if (this.employee_id[i] == id) {
+                System.out.println("Employee id is already exist.\n");
+                this.clearScreen();
+                return;
+            }
+        }
+
         String name = console.readLine("Enter employee name: ");
         String phone = console.readLine("Enter employee phone: ");
         String address = console.readLine("Enter employee address: ");
 
-        assert id > 0;
-
         this.clearScreen();
-
-        for (int i = 0; i < this.employee_id.length; i++) {
-            if (this.employee_id[i] == id) {
-                System.out.println("Employee id is already exist.\n");
-                return;
-            }
-        }
 
         for (int i = 0; i < this.employee_id.length; i++) {
             if (this.employee_id[i] == 0) {
@@ -222,7 +223,7 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void deleteEmployee() {
+    private void deleteEmployee() {
         System.out.println("Delete Employee\n");
 
         int id = Integer.parseInt(console.readLine("Enter employee id: "));
@@ -230,7 +231,7 @@ public class ITAdministrator extends MainMenu {
         this.clearScreen();
 
         for (int i = 0; i < this.employee_id.length; i++) {
-            if (this.employee_id[i] == id) {
+            if (this.employee_id[i] == id && this.employee_id[i] != 0) {
                 this.employee_id[i] = 0;
                 this.employee_name[i] = "";
                 this.employee_phone[i] = "";
@@ -257,7 +258,7 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void viewEmployees() {
+    private void viewEmployees() {
         System.out.println("View Employees\n");
         for (int i = 0; i < this.employee_id.length; i++) {
             if (this.employee_id[i] != 0) {
@@ -271,13 +272,18 @@ public class ITAdministrator extends MainMenu {
         System.out.println("-----------------------------\n");
     }
 
-    public void viewTransactions() {
+    private void viewTransactions() {
         System.out.println("Transaction History\n");
+        for (int i = 0; i < this.transaction_name.length; i++) {
+            if (this.transaction_name[i] != null) {
+                
+            }
+        }
         for (int i = 0; i < this.transaction_name.length; i++) {
             if(this.transaction_name[i] != null) {
                 if(!this.transaction_name[i].equals("")){
                     System.out.println("-----------------------------------");
-                    System.out.println("RECEIPT\n");
+                    System.out.println("RECEIPT #" + (i+1) + "\n");
                     System.out.println("Delivery Status: " + (this.transaction_isDelivered[i] ? "Delivered" : "Pending"));
                     System.out.println("Payment Status: " + (this.transaction_isPaid[i] ? "Paid" : "Pending"));
                     System.out.println("Name: " + this.transaction_name[i]);
@@ -287,25 +293,25 @@ public class ITAdministrator extends MainMenu {
                     System.out.println("Orders: ");
             
                     double total = 0;
-            
-                    for(int j = 0; j < this.transaction_orders[i].length; j++){
-                        int f_id = this.transaction_orders[i][j];
-                        int f_qty = this.transaction_quantities[i][j];
-                        String f_name = "(Deleted Food)";
-                        double f_price = 0;
+                    for (int j = 0; j < this.transaction_orders[i].length; j++) {
+                        if(this.transaction_orders[i][j] != 0) {
+                            int f_id = this.transaction_orders[i][j];
+                            int f_qty = this.transaction_quantities[i][j];
+                            String f_name = "(Deleted Food)";
+                            double f_price = 0;
 
-                        for(int k = 0; k < this.food_id.length; k++){
-                            if(this.food_id[k] == f_id){
-                                f_name = this.food_name[k];
-                                f_price = this.food_price[k];
-                                break;
+                            for(int k = 0; k < this.food_id.length; k++){
+                                if(this.food_id[k] == f_id){
+                                    f_name = this.food_name[k];
+                                    f_price = this.food_price[k] * f_qty;
+                                    break;
+                                }
                             }
-                        }
 
-                        total += f_price;
-                        System.out.println("  " + (j + 1) + ". " + f_name + " x" + f_qty + " - PHP " + f_price);
+                            total += f_price;
+                            System.out.println("  " + (j + 1) + ". " + f_name + " x" + f_qty + " - PHP " + f_price);
+                        }
                     }
-            
                     System.out.println("\n  Total: PHP " + total);
                     System.out.println("-----------------------------------\n");
                 }
@@ -313,7 +319,7 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void viewCustomers() {
+    private void viewCustomers() {
         System.out.println("View Customers\n");
         for (int i = 0; i < this.transaction_name.length; i++) {
             // display trasaction name,address,phone
@@ -329,7 +335,7 @@ public class ITAdministrator extends MainMenu {
         System.out.println("-----------------------------\n");
     }
 
-    public void login() {
+    private void login() {
         System.out.println("IT ADMINISTRATOR LOGIN\n");
         
         int id;
@@ -357,62 +363,35 @@ public class ITAdministrator extends MainMenu {
         }
     }
 
-    public void loadAdminData() {
+    private void loadAdminData() {
         try {
-            this.admin_id = new int[MAX_ID];
-            this.admin_name = new String[MAX_ID];
-            this.admin_password = new String[MAX_ID];
+            int t_admin_id[] = new int[MAX_ID];
+            String t_admin_name[] = new String[MAX_ID];
+            String t_admin_password[] = new String[MAX_ID];
+            
             File file = new File("admin.txt");
             Scanner input = new Scanner(file);
             int i = 0;
             while (input.hasNext()) {
                 String line[] = input.nextLine().split(",");
-                this.admin_id[i] = Integer.parseInt(line[0]);
-                this.admin_name[i] = line[1];
-                this.admin_password[i] = line[2];
+                t_admin_id[i] = Integer.parseInt(line[0]);
+                t_admin_name[i] = line[1];
+                t_admin_password[i] = line[2];
                 i++;
             }
             input.close();
+
+            this.admin_id = new int[i];
+            this.admin_name = new String[i];
+            this.admin_password = new String[i];
+            for (int j = 0; j < i; j++) {
+                this.admin_id[j] = t_admin_id[j];
+                this.admin_name[j] = t_admin_name[j];
+                this.admin_password[j] = t_admin_password[j];
+            }
+
         } catch (FileNotFoundException e) {
             System.out.println("admin.txt file not found\n");
-        }
-    }
-
-    public void register() {
-        System.out.println("IT ADMINISTRATOR REGISTRATION\n");
-        
-        int user_id = Integer.parseInt(console.readLine("Admin ID: ")) ;
-        String name = console.readLine("Name: ");
-        String password = console.readLine("Password: ");
-        String confirm_password = console.readLine("Confirm password: ");
-
-        assert user_id > 0;
-
-        for (int i = 0; i < 100; i++) {
-            if (this.admin_id[i] == user_id) {
-                this.clearScreen();
-                System.out.println("User id is already exist.\n");
-                return;
-            }
-        }
-
-        if (password.equals(confirm_password)) {
-            this.clearScreen();
-            System.out.println("Account created\n");
-
-            try {
-                FileWriter writer = new FileWriter("admin.txt", true);
-                String admin_info = user_id + "," + name + "," + password + "\n";
-                writer.write(admin_info);
-                writer.close();
-                System.out.println("Admin account created\n");
-            } catch (IOException e) {
-                System.out.println("Error creating Admin account\n");
-            }
-        } else {
-            this.clearScreen();
-            System.out.println("Password and confirm password are not the same. Try again\n");
-            return;
         }
     }
 }

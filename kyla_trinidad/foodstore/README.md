@@ -78,3 +78,46 @@ order status
 view checkout order
 return to main menu
 ```
+
+
+***removed part just in case***
+```java
+ // Admin account registration
+private void register() {
+    System.out.println("IT ADMINISTRATOR REGISTRATION\n");
+    
+    int user_id = Integer.parseInt(console.readLine("Admin ID: ")) ;
+    String name = console.readLine("Name: ");
+    String password = console.readLine("Password: ");
+    String confirm_password = console.readLine("Confirm password: ");
+
+    assert user_id > 0;
+
+    for (int i = 0; i < 100; i++) {
+        if (this.admin_id[i] == user_id) {
+            this.clearScreen();
+            System.out.println("User id is already exist.\n");
+            return;
+        }
+    }
+
+    if (password.equals(confirm_password)) {
+        this.clearScreen();
+        System.out.println("Account created\n");
+
+        try {
+            FileWriter writer = new FileWriter("admin.txt", true);
+            String admin_info = user_id + "," + name + "," + password + "\n";
+            writer.write(admin_info);
+            writer.close();
+            System.out.println("Admin account created\n");
+        } catch (IOException e) {
+            System.out.println("Error creating Admin account\n");
+        }
+    } else {
+        this.clearScreen();
+        System.out.println("Password and confirm password are not the same. Try again\n");
+        return;
+    }
+}
+```
