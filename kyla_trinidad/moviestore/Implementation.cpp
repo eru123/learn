@@ -349,6 +349,7 @@ bool MovieStore::addRent(){
             int t_video_id = getInt("Enter video id: ");
             Videos *temp = videos;
             bool video_found = false;
+            bool has_copy = false;
             while (temp != NULL)
             {
                 if (temp->id == t_video_id)
@@ -359,9 +360,15 @@ bool MovieStore::addRent(){
                     cout << "| " << setw(20) << "Movie Title" << " | " << setw(30) << temp->title << " |" << endl; 
                     cout << "| " << setw(20) << "Number of Copies" << " | " << setw(30) << temp->copies << " |" << endl; 
                     cout << "+-------------------------------------------------------+" << endl;
-
-                    temp->copies--;
-                    temp->available = temp->copies > 0 ? "Available" : "Unavailable";
+                    if( temp->copies > 0) {
+                        temp->copies--;
+                        temp->available = temp->copies > 0 ? "Available" : "Unavailable";
+                        rent_customer_id.push(t_customer_id);
+                        rent_video_id.push(t_video_id);
+                        cout << "Video rented." << endl;
+                    } else {
+                        cout << "No copies available." << endl;
+                    }
                     break;
                 }
                 temp = temp->next;
@@ -371,14 +378,6 @@ bool MovieStore::addRent(){
             {
                 cout << "Video not found." << endl;
             }
-            else
-            {
-                rent_customer_id.push(t_customer_id);
-                rent_video_id.push(t_video_id);
-
-                cout << "Video rented." << endl;
-            }
-            
 
             // ask if user wants to rent another video
             string answer = getString("Do you want to rent another video? (y/n): ");
