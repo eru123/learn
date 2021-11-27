@@ -523,17 +523,13 @@ void MovieStore::readCustomerRentals(){
         cout << "+----------------------+--------------------------------+" << endl;
         cout << "| " << setw(20) << "Video ID" << " | " << setw(30) << "Movie Title" << " |" << endl; 
         cout << "+----------------------+--------------------------------+" << endl;
-        cout << "size: " << trc_id.size() << endl;
         while (!trc_id.empty())
         {    
-            cout << "dbg-trc: " << trc_id.top() << " | " << "trv: " << trv_id.top() << endl;
             if (trc_id.top() == id)
             {
                 Videos *temp = videos;
-                cout << "customer match: id: " << id << endl;
                 while (temp != NULL)
                 {   
-                    cout << "cur video id: " <<  temp->id;
                     if (temp->id == trv_id.top())
                     {
                         cout << "| " << setw(20) << temp->id << " | " << setw(30) << temp->title << " |" << endl;
@@ -545,8 +541,6 @@ void MovieStore::readCustomerRentals(){
             trv_id.pop();
         }
         cout << "+----------------------+--------------------------------+" << endl;
-
-
     } catch (exception e){
         cout << "Unable to read customer rentals." << endl;
     }
