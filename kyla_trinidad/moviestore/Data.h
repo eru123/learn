@@ -42,6 +42,7 @@ namespace ns
         MovieStore();
         ~MovieStore();
         int getInt(string msg);
+        int getIntDefault(string msg, int def);
         string getString(string msg);
         vector<string> explode(string str, string delim);
         bool addVideo();

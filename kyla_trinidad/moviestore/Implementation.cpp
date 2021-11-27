@@ -57,19 +57,57 @@ vector<string> MovieStore::explode(string s, string delim) {
 int MovieStore::getInt(string msg)
 {   
     int num;
-    cout << msg;
-    cin >> num;
-    while (cin.fail())
-    {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input. Please enter a valid integer." << endl;
+    
+    while (true) 
+    {   
         cout << msg;
-        cin >> num;
+        if (cin.peek() == '\n') { 
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a valid integer." << endl;
+        } else {
+            cin >> num;
+            if(cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            } else {
+                break;
+            }
+        }
     }
+
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     return num;   
+}
+
+// Get an integer input with message and display error message when fails
+// returns default value if the input is empty
+int MovieStore::getIntDefault(string msg, int def){
+    int num;
+	while(true){
+        cout << msg << " (" << def << "): ";
+        if (cin.peek() == '\n') { 
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            return def;
+        } else {
+            cin >> num;
+            if (cin.fail()){
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a valid integer." << endl;
+            } else {
+                break;
+            }
+        }
+    }
+
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    return num;
 }
 
 // Get a string input with message and display error message when empty
@@ -229,8 +267,6 @@ bool MovieStore::addCustomer(){
         customer_name.push(name);
         customer_address.push(address);
 
-        cout << "ADDRESS: " << address << endl;
-
         cout << "Customer added with an ID " << id << "\n" << endl;
 
         return true;
@@ -275,15 +311,23 @@ void MovieStore::readCustomer(){
 // rent a video
 bool MovieStore::addRent(){
     try {
-        int t_customer_id = getInt("Enter customer id: ");
-
         queue<int> temp_id = customer_id;
         queue<string> temp_name = customer_name;
         queue<string> temp_address = customer_address;
+
+
+        if(temp_id.empty()){
+            cout << "No customers to rent a video." << endl;
+            return false;
+        }
+
+        int t_customer_id = getIntDefault("Enter customer id", temp_id.front());
+        bool found_customer = false;
         while (!temp_id.empty())
         {
             if (temp_id.front() == t_customer_id)
-            {
+            {   
+                found_customer = true;
                 cout << "+-------------------------------------------------------+" << endl;
                 cout << "| " << setw(20) << "Customer ID" << " | " << setw(30) << temp_id.front() << " |" << endl; 
                 cout << "| " << setw(20) << "Customer Name" << " | " << setw(30) << temp_name.front() << " |" << endl; 
@@ -295,14 +339,21 @@ bool MovieStore::addRent(){
             temp_name.pop();
             temp_address.pop();
         }
+        if(!found_customer){
+            cout << "Customer not found. Please try again later." << endl;
+            return false;
+        }
+        
 
         while(true){
             int t_video_id = getInt("Enter video id: ");
             Videos *temp = videos;
+            bool video_found = false;
             while (temp != NULL)
             {
                 if (temp->id == t_video_id)
                 {   
+                    video_found = true;
                     cout << "+-------------------------------------------------------+" << endl;
                     cout << "| " << setw(20) << "Video ID" << " | " << setw(30) << temp->id << " |" << endl; 
                     cout << "| " << setw(20) << "Movie Title" << " | " << setw(30) << temp->title << " |" << endl; 
@@ -316,14 +367,22 @@ bool MovieStore::addRent(){
                 temp = temp->next;
             }
 
-            rent_customer_id.push(t_customer_id);
-            rent_video_id.push(t_video_id);
+            if(!video_found)
+            {
+                cout << "Video not found." << endl;
+            }
+            else
+            {
+                rent_customer_id.push(t_customer_id);
+                rent_video_id.push(t_video_id);
 
-            cout << "Video rented." << endl;
+                cout << "Video rented." << endl;
+            }
+            
 
             // ask if user wants to rent another video
             string answer = getString("Do you want to rent another video? (y/n): ");
-            if (answer != "y" || answer != "Y")
+            if (!(answer == "y" || answer == "Y"))
             {
                 break;
             }

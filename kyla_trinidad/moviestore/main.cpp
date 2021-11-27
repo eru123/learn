@@ -4,6 +4,7 @@
 using namespace std;
 using namespace ns;
 
+
 int main()
 {	
 	MovieStore store;
