@@ -1,0 +1,10 @@
+1|Ted Mosby|Apple street, Kingsville, Mambugan, Antipolo City
+2|Lily Aldrin|Hill Valley, Concepcion, Marikina City
+3|King Alday|FEU Village, Mambugan, Antipolo City 
+4|Kyle Reyes|FEU Village, Mambugan Antipolo City
+5|Kyla Trinidad|Town and Country, San Antonio, Makati
+6|Angelo Medina|Vermont Village, Asin Road, Baguio City
+7|Andrei Nicolas|Sierra Monte, Brookside, Baguio City
+8|Kyla Bajar|Maries Village, Poblacion, Makati City.
+9|Shannen Casta¤eda |Congress Village, Barangay 175, Caloocan City
+10|Gabriel Dar|Villa Cecilia, Mambugan, Antipolo City
