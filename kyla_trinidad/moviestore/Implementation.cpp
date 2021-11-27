@@ -14,7 +14,7 @@
 #define VIDEOS_FILE "VIDEO.txt"
 #define CUSTOMERS_FILE "CUSTOMER.txt"
 #define CUSTOMER_RENT_FILE "CUSTOMER-RENT.txt"
-#define DATA_DELIMITER ","
+#define DATA_DELIMITER "|"
 #define ID_FILE "ID.txt"
 
 using namespace std;
@@ -289,13 +289,13 @@ void MovieStore::readCustomer(){
         {
             if (temp_id.front() == id)
             {
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer ID" << " | " << setw(30) << temp_id.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer Name" << " | " << setw(30) << temp_name.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer Address" << " | " << setw(30) << temp_address.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer ID" << " | " << setw(50) << temp_id.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Name" << " | " << setw(50) << temp_name.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Address" << " | " << setw(50) << temp_address.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
                 return;
             }
             temp_id.pop();
@@ -327,11 +327,13 @@ bool MovieStore::addRent(){
             if (temp_id.front() == t_customer_id)
             {   
                 found_customer = true;
-                cout << "+-------------------------------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer ID" << " | " << setw(30) << temp_id.front() << " |" << endl; 
-                cout << "| " << setw(20) << "Customer Name" << " | " << setw(30) << temp_name.front() << " |" << endl; 
-                cout << "| " << setw(20) << "Customer Address" << " | " << setw(30) << temp_address.front() << " |" << endl; 
-                cout << "+-------------------------------------------------------+" << endl;
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer ID" << " | " << setw(50) << temp_id.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Name" << " | " << setw(50) << temp_name.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Address" << " | " << setw(50) << temp_address.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
                 break;
             }
             temp_id.pop();
@@ -402,17 +404,21 @@ bool MovieStore::removeRent(){
         queue<int> temp_id = customer_id;
         queue<string> temp_name = customer_name;
         queue<string> temp_address = customer_address;
+
+        bool found_customer = false;
+
         while (!temp_id.empty())
         {
             if (temp_id.front() == id)
-            {
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer ID" << " | " << setw(30) << temp_id.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer Name" << " | " << setw(30) << temp_name.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer Address" << " | " << setw(30) << temp_address.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
+            {   
+                found_customer = true;
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer ID" << " | " << setw(50) << temp_id.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Name" << " | " << setw(50) << temp_name.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Address" << " | " << setw(50) << temp_address.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
                 break;
             }
             temp_id.pop();
@@ -420,23 +426,35 @@ bool MovieStore::removeRent(){
             temp_address.pop();
         }
 
+        if (!found_customer)
+        {
+            cout << "Customer not found." << endl;
+            return false;
+        }
+
         cout << "Videos Rented..." << endl;
         stack<int> trc_id = rent_customer_id;
         stack<int> trv_id = rent_video_id;
+
+        stack<int> * ntrc_id = new stack<int>;
+        stack<int> * ntrv_id = new stack<int>;
+
+        int video_return_counter = 0;
+
         while (!trc_id.empty())
-        {
+        {   
+            bool video_found = false;
             if (trc_id.top() == id)
             {
-                cout << "Video ID: " << trv_id.top();
-                trc_id.pop();
-                trv_id.pop();
-
+                cout << "Video ID: " << trv_id.top() << endl;;
                 // search video in video list and increment copies
                 Videos *temp = videos;
                 while (temp != NULL)
                 {
                     if (temp->id == trv_id.top())
-                    {
+                    {   
+                        video_found = true;
+                        video_return_counter++;
                         temp->copies++;
                         temp->available = temp->copies > 0 ? "Available" : "Unavailable";
                         break;
@@ -444,8 +462,25 @@ bool MovieStore::removeRent(){
                     temp = temp->next;
                 }
             }
+
+            // add to new stack if video not found
+            if (!video_found)
+            {
+                ntrc_id->push(trc_id.top());
+                ntrv_id->push(trv_id.top());
+            }
+            
+            trv_id.pop();
+            trc_id.pop();
         }
-        cout << "Rented videos have been returned." << endl;
+        if(video_return_counter > 0) {
+            rent_customer_id = *ntrc_id;
+            rent_video_id = *ntrv_id;
+            cout << "Rented Video(s) have been returned." << endl;
+        } else {
+            cout << "No videos rented." << endl;
+        }
+        
         return true;
     } catch (exception e){
         cout << "Unable to return video." << endl;
@@ -466,13 +501,13 @@ void MovieStore::readCustomerRentals(){
         {
             if (temp_id.front() == id)
             {
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer ID" << " | " << setw(30) << temp_id.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer Name" << " | " << setw(30) << temp_name.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
-                cout << "| " << setw(20) << "Customer Address" << " | " << setw(30) << temp_address.front() << " |" << endl; 
-                cout << "+----------------------+--------------------------------+" << endl;
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer ID" << " | " << setw(50) << temp_id.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Name" << " | " << setw(50) << temp_name.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
+                cout << "| " << setw(20) << "Customer Address" << " | " << setw(50) << temp_address.front() << " |" << endl; 
+                cout << "+----------------------+----------------------------------------------------+" << endl;
                 break;
             }
             temp_id.pop();
@@ -490,7 +525,7 @@ void MovieStore::readCustomerRentals(){
         cout << "+----------------------+--------------------------------+" << endl;
         cout << "size: " << trc_id.size() << endl;
         while (!trc_id.empty())
-        {   
+        {    
             cout << "dbg-trc: " << trc_id.top() << " | " << "trv: " << trv_id.top() << endl;
             if (trc_id.top() == id)
             {
