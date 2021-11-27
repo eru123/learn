@@ -2,23 +2,24 @@
 2,IT,Horror,Warner Bros Pictures,10,Available,image13.jpg
 3,The Conjuring,Horror,Warner Bros Pictures,10,Available,image12.jpg
 4,Us,Horror,Universal Pictures,10,Available,image23.jpg
-5,About Time,Romance,Universal Pictures,10,Available,image15.jpg
-6,10 Things I Hate About You,Romance,Touchstone Pictures,10,Available,image8.jpg
-7,Titanic,Romance,20th Century Studios,10,Available,image4.jpg
-8,Crazy Rich Asians,Romance,Warner Bros Pictures,10,Available,image19.jpg
-9,The Notebook,Romance,Gran Via,10,Available,image10.jpg
-10,Pixels,Sci-Fi,Sony Pictures Ent.,10,Available,image21.jpg
-11,Men in Black International,Sci-Fi,Sony Pictures Ent.,10,Available,image24.jpg
-12,Back To The Future,Sci-Fi,Universal Pictures,10,Available,image25.jpg
-13,Man of Steel,Sci-Fi,Warner Bros Pictures,10,Available,image9.jpg
-14,In Time,Sci-Fi,20th Century Studios,10,Available,image6.jpg
-15,Red Notice,Action,Netflix,10,Available,image2.jpg
-16,John Wick,Action,Lionsgate Movies,10,Available,image1.jpg
-17,Charlie's Angels,Action,Sony Pictures Ent.,10,Available,image7.jpg
-18,Ready Player One,Action,Warner Bros Pictures,10,Available,image11.jpg
-19,Bumblebee,Action,Paramount Pictures,10,Available,image5.jpg
-20,Grown Ups,Comedy,Columbia Pictures,10,Available,image22.jpg
-21,Blended,Comedy,Happy Madison Prod.,10,Available,image20.jpg
-22,School of Rock,Comedy,Paramount Pictures,10,Available,image14.jpg
-23,Mean Girls,Comedy,Lorne Michaels Prod.,10,Available,image3.jpg
-24,Click,Comedy,Columbia Pictures,10,Available,image18.jpg
+5,Paranormal Activity,Horror,Paramount Pictures,10,Available,image16.jpg
+6,About Time,Romance,Universal Pictures,10,Available,image15.jpg
+7,10 Things I Hate About You,Romance,Touchstone Pictures,10,Available,image8.jpg
+8,Titanic,Romance,20th Century Studios,10,Available,image4.jpg
+9,Crazy Rich Asians,Romance,Warner Bros Pictures,10,Available,image19.jpg
+10,The Notebook,Romance,Gran Via,10,Available,image10.jpg
+11,Pixels,Sci-Fi,Sony Pictures Ent.,10,Available,image21.jpg
+12,Men in Black International,Sci-Fi,Sony Pictures Ent.,10,Available,image24.jpg
+13,Back To The Future,Sci-Fi,Universal Pictures,10,Available,image25.jpg
+14,Man of Steel,Sci-Fi,Warner Bros Pictures,10,Available,image9.jpg
+15,In Time,Sci-Fi,20th Century Studios,10,Available,image6.jpg
+16,Red Notice,Action,Netflix,10,Available,image2.jpg
+17,John Wick,Action,Lionsgate Movies,10,Available,image1.jpg
+18,Charlie's Angels,Action,Sony Pictures Ent.,10,Available,image7.jpg
+19,Ready Player One,Action,Warner Bros Pictures,10,Available,image11.jpg
+20,Bumblebee,Action,Paramount Pictures,10,Available,image5.jpg
+21,Grown Ups,Comedy,Columbia Pictures,10,Available,image22.jpg
+22,Blended,Comedy,Happy Madison Prod.,10,Available,image20.jpg
+23,School of Rock,Comedy,Paramount Pictures,10,Available,image14.jpg
+24,Mean Girls,Comedy,Lorne Michaels Prod.,10,Available,image3.jpg
+25,Click,Comedy,Columbia Pictures,10,Available,image18.jpg

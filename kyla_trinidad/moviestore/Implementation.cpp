@@ -315,7 +315,6 @@ bool MovieStore::addRent(){
         queue<string> temp_name = customer_name;
         queue<string> temp_address = customer_address;
 
-
         if(temp_id.empty()){
             cout << "No customers to rent a video." << endl;
             return false;
