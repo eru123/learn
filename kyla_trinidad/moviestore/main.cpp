@@ -72,7 +72,7 @@ int main()
 			store.saveData();
 			return 0;
 		default:
-			system("cls");
+			cout << "Invalid input! Try again" << endl;
 			break;
 		}
 	}
