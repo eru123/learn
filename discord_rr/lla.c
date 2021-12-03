@@ -35,7 +35,8 @@ int main(){
     int n1_len = charlen(num1);
     t = NULL;
     n1 = NULL;
-    for(int i = 0; i < n1_len;i++){
+    int i;
+    for( i = 0; i < n1_len;i++){
       int v = num1[i] - '0';
       t = (struct node *)malloc(sizeof(struct node));
       t->value = v;
@@ -53,7 +54,7 @@ int main(){
     int n2_len = charlen(num2);
     t = NULL;
     n2 = NULL;
-    for(int i = 0; i < n2_len;i++){
+    for( i = 0; i < n2_len;i++){
       int v = num2[i] - '0';
       t = (struct node *)malloc(sizeof(struct node));
       t->value = v;
