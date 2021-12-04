@@ -26,26 +26,33 @@ int main()
 		cout << "8. Exit" << endl;
 
 		choice = store.getInt("Enter your choice: ");
+		system("cls");
 		cout << endl;
 		switch (choice)
 		{
 		case 1:
 			store.addVideo();
+			system("pause && cls");
 			break;
 		case 2:
 			store.addRent();
+			system("pause && cls");
 			break;
 		case 3:
 			store.removeRent();
+			system("pause && cls");
 			break;
 		case 4:
 			store.readVideo(false);
+			system("pause && cls");
 			break;
 		case 5:
 			store.readVideos();
+			system("pause && cls");
 			break;
 		case 6:
 			store.readVideo(true);
+			system("pause && cls");
 			break;
 		case 7:
 			cout << "CUSTOMER MAINTENANCE:" << endl;

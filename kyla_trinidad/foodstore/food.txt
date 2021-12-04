@@ -1,3 +1,0 @@
-1,ice cream,45.0
-2,balot penoy,10.0
-3,toyo,8.0
