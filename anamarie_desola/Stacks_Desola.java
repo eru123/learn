@@ -1,11 +1,10 @@
 import java.util.*;
-import java.io.*;
 
 public class Stacks_Desola {
+  final static Scanner sc = new Scanner(System.in);
   public static void main(String[] args) {
     Stack<Integer> stack = new Stack<Integer>();
     Stack<Integer> temp = new Stack<Integer>();
-    Scanner sc = new Scanner(System.in);
 
     int choice = 0;
 
