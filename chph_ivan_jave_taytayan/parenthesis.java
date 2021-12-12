@@ -1,5 +1,3 @@
-package parenthesis;
-
 // import the scanner class
 import java.util.Scanner;
 
