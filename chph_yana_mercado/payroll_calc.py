@@ -67,7 +67,8 @@ class Payroll:
         i = self.history_list.curselection()[0] # get selected index
         hours = self.data[i][1] # get hours
         rate = self.data[i][2] # get rate
-        self.calculate(hours, rate, False) # calculate and show result
+        name = self.data[i][3] # get name
+        self.calculate(name, hours, rate, False) # calculate and show result
 
     def create_history(self):
         if len(self.data) > 0:
@@ -97,7 +98,7 @@ class Payroll:
             self.history_list = None # reset history list
             self.history_list = tk.Listbox(self.history,width=400, height=20, yscrollcommand=scrollbar.set, selectmode=tk.SINGLE) # create listbox
             for i in range(len(self.data)):
-                self.history_list.insert(i, self.data[i][0]) # insert date from data
+                self.history_list.insert(i, f'{self.data[i][3]:<30}  {self.data[i][0]:>30}') # insert name date from data to list
             self.history_list.pack(side=tk.LEFT, fill=tk.BOTH) # pack listbox
             scrollbar.config(command=self.history_list.yview) # set scrollbar to listbox
 
@@ -122,8 +123,7 @@ class Payroll:
             # destroy history window if history window is open
             self.history.destroy()
 
-
-    def calculate(self, hours, rate, save: bool = False):
+    def calculate(self, name, hours, rate, save: bool = False):
         date = datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S") # get current date
         hours = float(hours) # convert hours to float
         rate = float(rate) # convert rate to float
@@ -131,12 +131,13 @@ class Payroll:
         if self.rate_cal(self.time_cal(hours), rate)==None:
             # if not overtime
             # construct message for non-overtime
-            message = f"Payroll Information\n\n" \
-                f"Pay rate: ₱{rate:7.2f}\n" \
-                f"Regular Hours: {hours:2.0f}\n" \
+            message = f"{'Payroll Information':<75}\n\n" \
+                f"Employee Name:  {name}\n" \
+                f"Pay rate:             ₱{rate:7.2f}\n" \
+                f"Regular Hours:  {hours:2.0f}\n" \
                 f"Overtime Hours: 0\n" \
-                f"Regular pay: ₱{hours*rate:7.2f}\n" \
-                f"Total pay: ₱{hours*rate:7.2f}"
+                f"Regular Pay:      ₱{hours*rate:7.2f}\n" \
+                f"Total pay:           ₱{hours*rate:7.2f}"
             
             # show messagebox
             msgbox.showinfo(title='Payroll Information', message=message)
@@ -144,25 +145,26 @@ class Payroll:
             # if overtime
             otpay = self.rate_cal(self.time_cal(hours), rate) # calculate overtime pay
             # construct the message for messagebox
-            message = f"Payroll Information\n\n" \
-                f"Pay rate: ₱{rate:7.2f}\n" \
-                f"Regular Hours: {hours:2.0f}\n" \
-                f"Regular Pay: ₱{hours*rate:7.2f}\n" \
-                f"Overtime pay: ₱{otpay:7.2f}\n" \
-                f"Total pay: ₱{(hours*rate) + otpay:7.2f}"
+            message = f"{'Payroll Information':<75}\n\n" \
+                f"Employee Name:  {name}\n" \
+                f"Pay rate:             ₱{rate:7.2f}\n" \
+                f"Regular Hours:  {hours:2.0f}\n" \
+                f"Regular Pay:      ₱{hours*rate:7.2f}\n" \
+                f"Overtime pay:    ₱{otpay:7.2f}\n" \
+                f"Total pay:           ₱{(hours*rate) + otpay:7.2f}"
             
             # show messagebox
             msgbox.showinfo(title='Payroll Information', message=message)
 
         if save:
             # if save is true
-            self.data.append([date, hours, rate]) # add data to list
+            self.data.append([date, hours, rate, name]) # add data to list
             self.write_to_file()
 
     def calculate_last(self):
         if len(self.data) > 0:
             # if data is not empty
-            self.calculate(self.data[-1][1], self.data[-1][2], False)
+            self.calculate(self.data[-1][3],self.data[-1][1], self.data[-1][2], False)
         else:
             # show error message if no data
             msgbox.showerror(title='Error', message='Empty data')
@@ -174,12 +176,13 @@ class Application(tk.Frame):  # Class that inherits from tk.Frame
         self.master = master  # master is the root window
         self.pack()  # pack() is a method of the Frame 
         self.master.title("Payroll Calculator")  # Edit title of window
-        self.master.geometry("500x230")  # set width and height of window
-        self.master.resizable(width=False, height=False) # disable resizing of window
+        self.master.geometry("500x300")  # set width and height of window
+        # self.master.resizable(width=False, height=False) # disable resizing of window
         self.payroll = Payroll(self)  # create payroll object and pass self as parameter or as a parent tkinter Frame
         self.create_widgets()  # call the method to create the widgets
 
     def create_widgets(self):  # method to create widgets
+
          # Menu Bar
         menu = tk.Menu(self.master) # create menu container
         self.master.config(menu=menu) # attach menu to root window
@@ -188,27 +191,35 @@ class Application(tk.Frame):  # Class that inherits from tk.Frame
         menu.add_command(label="History", command=self.payroll.create_history)  # button to view history
         menu.add_command(label="Clear", command=self.payroll.clear)  # button to clear data
         menu.add_command(label="Last Entry", command=self.payroll.calculate_last)  # button to view last entry
+    
+        # name label
+        self.name_label = tk.Label(self, text="What is your name?", width=35, justify="left") # create label
+        self.name_label.grid(row=0, column=0, pady=20) # place label to row 0, column 0
 
-         # hours label
+        # name textbox
+        self.name_entry = tk.Entry(self, width=20) # name text input
+        self.name_entry.grid(row=0, column=1) # place text input to row 0, column 1
+
+        # hours label
         hours_label = tk.Label(self, text="How many hours did you work?", width=35, justify="left") # create label
-        hours_label.grid(row=0, column=0, pady=30) # place label to row 0, column 0
+        hours_label.grid(row=1, column=0, pady=20) # place label to row 1, column 0
 
         # hours textbox
-        self.hours_entry = tk.Entry(self, width=15) # create hours textbox
-        self.hours_entry.grid(row=0, column=1, pady=30) # place textbox to row 0, column 1
+        self.hours_entry = tk.Entry(self, width=20) # create hours textbox
+        self.hours_entry.grid(row=1, column=1) # place textbox to row 1, column 1
         self.hours_entry.focus() # set cursor focus to hours textbox
 
         # rate label
         rate_label = tk.Label(self, text="What is your hourly rate?", width=35, justify="left") # create label
-        rate_label.grid(row=1, column=0) # place label to row 1, column 0
+        rate_label.grid(row=2, column=0, pady=20) # place label to row 2, column 0
 
-        # text input entries
-        self.rate_entry = tk.Entry(self, width=15) # rate text input
-        self.rate_entry.grid(row=1, column=1) # place text input to row 1, column 1
+        # rate textbox
+        self.rate_entry = tk.Entry(self, width=20) # rate text input
+        self.rate_entry.grid(row=2, column=1) # place text input to row 2, column 1
 
         # calculate button
         calculate_button = tk.Button(self, text="Calculate", command=self.calculate) # create button
-        calculate_button.grid(row=2, column=0, columnspan=2, pady=50) # place button to row 2, column 0, columnspan 2
+        calculate_button.grid(row=3, column=0, columnspan=2, pady=30) # place button to row 3, column 0, columnspan 2
 
     def exit(self):  # method to exit the program
         self.master.destroy()  # destroy the root window
@@ -239,7 +250,19 @@ class Application(tk.Frame):  # Class that inherits from tk.Frame
             self.rate_entry.delete(0, "end") # delete the text in the rate textbox
             return
         
-        self.payroll.calculate(hours, rate, save=True)  # call the calculate method of the payroll object
+        # get the name from the entry widget
+        try:
+            name = self.name_entry.get()  # get the name from the entry widget
+            if name == "":
+                msgbox.showerror(title="Invalid Name Input", message="Please enter a valid name")
+                self.name_entry.delete(0, "end") # delete the text in the name textbox
+                return
+        except ValueError:  # if name is not a string, show msgbox error and return
+            msgbox.showerror(title="Invalid Name Input", message="Please enter a valid name")
+            self.name_entry.delete(0, "end") # delete the text in the name textbox
+            return
+
+        self.payroll.calculate(name, hours, rate, True)  # call the calculate method of the payroll object
         self.hours_entry.delete(0, "end") # delete the text in the hours textbox
         self.rate_entry.delete(0, "end") # delete the text in the rate textbox
 
