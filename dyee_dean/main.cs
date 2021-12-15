@@ -208,9 +208,62 @@ namespace ConsoleApp1
         }
 
         class TwoWheeledVehicle : WheeledVehicle 
-        {
-            public override int SeatCapacity = 3;
+        {   
+            public int NumberOfPersonRiding = 1;
+            public TwoWheeledVehicle()
+            {
+                NumberOfPersonRiding = 1;
+
+            }
+            public void setNumberOfPersonRiding(int number)
+            {   
+                // max of 3 
+                if (number <= 3)
+                {
+                    NumberOfPersonRiding = number;
+                }
+                else
+                {
+                    Console.WriteLine("Max of 3 people can ride");
+                }
+            }
+            public double getSpeed()
+            {
+                return Speed;
+            }
+            public void setGasTankCapacity()
+            {
+                GasTankCapacity = GasTankCapacity - NumberOfPersonRiding;
+            }
+
         }
+
+        class FourWheeledVehicle : WheeledVehicle 
+        {
+            public int NumberOfPersonRiding = 1;
+            public void setNumberOfPersonRiding(int number)
+            {
+                // max of 6
+                if (number <= 6)
+                {
+                    NumberOfPersonRiding = number;
+                }
+                else
+                {
+                    Console.WriteLine("Max of 6 people can ride");
+                }
+            }
+            public double getSpeed()
+            {
+                return Speed;
+            }
+            public void setGasTankCapacity()
+            {
+                GasTankCapacity = GasTankCapacity - NumberOfPersonRiding;
+            }
+        }
+
+        
 
         static void Main(string[] args)
         {
