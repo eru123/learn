@@ -3,8 +3,9 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Program Files\\MySQL\\mysql-connector-java-8.0.26.jar",
-        "c:\\Users\\User\\Downloads\\gson-2.8.6.jar"
+        "c:\\Users\\User\\Downloads\\gson-2.8.6.jar",
+        "gson-2.8.6.jar",
+        "mysql-connector-java-8.0.26.jar"
     ],
     "java.dependency.packagePresentation": "hierarchical"
 }

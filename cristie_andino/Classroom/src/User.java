@@ -5,6 +5,7 @@ public abstract class User {
   private UserType user;
   static JFrame frame;
   JMenu menu;
+  JMenuBar menuBar;
   public User(Database db, UserType user){
     this.db = db;
     this.user = user;
@@ -14,7 +15,7 @@ public abstract class User {
     
 
     // Menu bar
-    JMenuBar menuBar = new JMenuBar();
+    menuBar = new JMenuBar();
     menu = new JMenu("Menu");
     JMenuItem menuItem = new JMenuItem("Logout");
     menuItem.addActionListener(e -> {

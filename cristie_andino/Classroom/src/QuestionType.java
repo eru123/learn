@@ -26,10 +26,9 @@ public class QuestionType {
   public QuestionType() {
     // create new question
     // JFrame question form
-    JFrame frame = new JFrame("Question");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(400, 400);
-    frame.setVisible(true);
+    JFrame qframe = new JFrame("Question");
+    qframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    qframe.setSize(400, 400);
 
     // create question form
     JPanel panel = new JPanel();
@@ -72,30 +71,35 @@ public class QuestionType {
         for (int i = 0; i < choices.length; i++) {
           choices[i] = choices[i].trim();
         }
-        // close frame
-        frame.dispose();
+        // close qframe
+        qframe.dispose();
       }
     });
 
     // add submit button to panel
     panel.add(submitButton);
 
-    // add panel to frame
-    frame.add(panel);
-
     panel.revalidate();
 
-    // wait for submit button to be pressed
-    while (question == null) {
-      try {
-        Thread.sleep(100);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
+    // add panel to qframe
+    qframe.add(panel);
+    qframe.pack();
+    qframe.setVisible(true);
+    qframe.setLocationRelativeTo(null);
 
-    // close frame
-    frame.dispose();
+
+
+    // wait for submit button to be pressed
+    // while (question == null) {
+    //   try {
+    //     Thread.sleep(100);
+    //   } catch (InterruptedException e) {
+    //     e.printStackTrace();
+    //   }
+    // }
+
+    // // close qframe
+    // qframe.dispose();
   }
 
   public boolean ask(){
@@ -104,10 +108,10 @@ public class QuestionType {
 
     // ask question
     // JFrame question multiple choice form ABCD
-    JFrame frame = new JFrame("Question");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(400, 400);
-    frame.setVisible(true);
+    JFrame qframe = new JFrame("Question");
+    qframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    qframe.setSize(400, 400);
+    qframe.setVisible(true);
 
     // create question form
     JPanel panel = new JPanel();
@@ -147,15 +151,15 @@ public class QuestionType {
         for (int i = 0; i < radioButtons.length; i++) {
           if (radioButtons[i].isSelected()) {
             if (radioButtons[i].getText().equals(answer)) {
-              JOptionPane.showMessageDialog(frame, "Correct!");
+              JOptionPane.showMessageDialog(qframe, "Correct!");
               result = true;
             } else {
-              JOptionPane.showMessageDialog(frame, "Incorrect!");
+              JOptionPane.showMessageDialog(qframe, "Incorrect!");
             }
           }
         }
-        // close frame
-        frame.dispose();
+        // close qframe
+        qframe.dispose();
 
         isPressed = true;
       }
@@ -164,8 +168,8 @@ public class QuestionType {
     // add submit button to panel
     panel.add(submitButton);
 
-    // add panel to frame
-    frame.add(panel);
+    // add panel to qframe
+    qframe.add(panel);
 
     panel.revalidate();
 
@@ -178,8 +182,8 @@ public class QuestionType {
       }
     }
 
-    // close frame
-    frame.dispose();
+    // close qframe
+    qframe.dispose();
 
     return result;
   }
@@ -208,4 +212,5 @@ public class QuestionType {
     }
     return choicesString;
   }
+
 }
