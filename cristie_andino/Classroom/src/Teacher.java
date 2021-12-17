@@ -8,8 +8,8 @@ public class Teacher extends User {
   private Database db;
   private UserType selectedStudent = null;
   private QuizType selectedQuiz = null;
-  private JList studentList = null;
-  private JList quizList = null;
+  private JList<String> studentList = null;
+  private JList<String> quizList = null;
   public Teacher(Database d, UserType user){
     super(d, user);
     db = d;
@@ -205,7 +205,7 @@ public class Teacher extends User {
     if (studentList != null) {
       studentList.setListData(students);
     } else {
-      studentList = new JList(students);
+      studentList = new JList<String>(students);
     }
   }
 
@@ -218,7 +218,7 @@ public class Teacher extends User {
     if (quizList != null) {
       quizList.setListData(quizzes);
     } else {
-      quizList = new JList(quizzes);
+      quizList = new JList<String>(quizzes);
     }
   }
 

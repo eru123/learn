@@ -28,7 +28,6 @@ public class Database {
 				// create database if not exists
 				Statement statement = connection.createStatement();
 				statement.execute("CREATE DATABASE IF NOT EXISTS " + DATABASE);
-				System.out.println("Database created");
 	
 				// create user table if not exists
 				statement.execute("CREATE TABLE IF NOT EXISTS " + DATABASE + ".user (" +
@@ -39,7 +38,6 @@ public class Database {
 						"role VARCHAR(255) NOT NULL," +
 						"PRIMARY KEY (id)" +
 						")");
-				System.out.println("User table... OK");
 	
 				// create quiz table if not exists
 				statement.execute("CREATE TABLE IF NOT EXISTS " + DATABASE + ".quiz (" +
@@ -50,7 +48,6 @@ public class Database {
 						"questions JSON NOT NULL," +
 						"PRIMARY KEY (id)" +
 						")");
-				System.out.println("Quiz table... OK");
 	
 				// create answer table if not exists
 				statement.execute("CREATE TABLE IF NOT EXISTS " + DATABASE + ".answer (" +
@@ -62,7 +59,6 @@ public class Database {
 						"FOREIGN KEY (question_id) REFERENCES quiz(id)," +
 						"FOREIGN KEY (student_id) REFERENCES user(id)" +
 						")");
-				System.out.println("Answer table... OK");
 	
 				// count how many user is registered
 				ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM " + DATABASE + ".user");
@@ -73,7 +69,6 @@ public class Database {
 					// insert admin user
 					statement.execute("INSERT INTO " + DATABASE
 							+ ".user (name, username, password, role) VALUES ('Admin', 'admin', 'admin', 'admin')");
-					System.out.println("Admin user... OK");
 				}
 	
 				statement.close();
@@ -312,12 +307,11 @@ public class Database {
 			if (resultSet.next()) {
 				return true;
 			}
+			return false;
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			return false;
 		}
-
-		return false;
 	}
 
 	// login user

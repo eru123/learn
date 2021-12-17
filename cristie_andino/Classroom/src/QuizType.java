@@ -2,7 +2,7 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
+// import javax.swing.event.*;
 
 public class QuizType {
   int id;
@@ -98,7 +98,6 @@ public class QuizType {
     // blank constructor
   }
   private boolean submit(Database db) {
-    System.out.println("Submitting quiz");
     QuizType quiz = new QuizType();
     quiz.name = name;
     quiz.description = description;
@@ -128,19 +127,11 @@ public class QuizType {
     return res;
   }
 
-  public int take(){
-    int score = 0;
-    for (QuestionType q : questions) {
-      score += q.ask() ? 1 : 0;
-    }
-    return score;
-  }
-
   public void viewScores(Database db){
     ArrayList<AnswerType> answers = db.getAllAnswer(this.id);
     String[] answersArray = new String[answers.size()];
     for (int i = 0; i < answers.size(); i++) {
-      answersArray[i] = answers.get(i).toString();
+      answersArray[i] = answers.get(i).toStr(db);
     }
 
     JFrame frame = new JFrame("Quiz Scores");
@@ -155,7 +146,7 @@ public class QuizType {
     JList<String> listbox = new JList<String>(answersArray);
     listbox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listbox.setLayoutOrientation(JList.VERTICAL);
-    listbox.setVisibleRowCount(-1);
+    // listbox.setVisibleRowCount(-1);
 
     // create scrollpane for listbox
     JScrollPane scrollpane = new JScrollPane(listbox);

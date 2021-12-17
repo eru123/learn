@@ -7,8 +7,8 @@ import java.util.*;
 public class Admin extends User {
   private UserType selectedTeacher = null;
   private UserType selectedStudent = null;
-  private JList teacherList = null;
-  private JList studentList = null;
+  private JList<String> teacherList = null;
+  private JList<String> studentList = null;
   private Database db;
 
   public Admin(Database db, UserType user) {
@@ -247,7 +247,7 @@ public class Admin extends User {
     if (teacherList != null) {
       teacherList.setListData(teachers);
     } else {
-      teacherList = new JList(teachers);
+      teacherList = new JList<String>(teachers);
     }
   }
 
@@ -260,7 +260,7 @@ public class Admin extends User {
     if (studentList != null) {
       studentList.setListData(students);
     } else {
-      studentList = new JList(students);
+      studentList = new JList<String>(students);
     }
   }
 }

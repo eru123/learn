@@ -5,8 +5,8 @@ public class QuestionType {
   private String question;
   private String answer;
   private String[] choices;
-  private transient boolean result;
-  private transient boolean isPressed;
+  public transient boolean result;
+  public transient boolean isPressed;
 
   public QuestionType(String question, String answer, String[] choices) {
     this.question = question;
@@ -87,105 +87,17 @@ public class QuestionType {
     qframe.setVisible(true);
     qframe.setLocationRelativeTo(null);
 
-
-
     // wait for submit button to be pressed
     // while (question == null) {
-    //   try {
-    //     Thread.sleep(100);
-    //   } catch (InterruptedException e) {
-    //     e.printStackTrace();
-    //   }
+    // try {
+    // Thread.sleep(100);
+    // } catch (InterruptedException e) {
+    // e.printStackTrace();
+    // }
     // }
 
     // // close qframe
     // qframe.dispose();
-  }
-
-  public boolean ask(){
-    result = false;
-    isPressed = false;
-
-    // ask question
-    // JFrame question multiple choice form ABCD
-    JFrame qframe = new JFrame("Question");
-    qframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    qframe.setSize(400, 400);
-    qframe.setVisible(true);
-
-    // create question form
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-    // create question label
-    JLabel questionLabel = new JLabel(question);
-    panel.add(questionLabel);
-    
-    // join answer in choices and store in an array
-    String[] options = new String[this.choices.length + 1];
-    options[0] = this.answer;
-    for (int i = 0; i < this.choices.length; i++) {
-      options[i + 1] = this.choices[i];
-    }
-    
-    // randomize options
-    for (int i = options.length - 1; i > 0; i--) {
-      int index = (int) (Math.random() * (i + 1));
-      String temp = options[index];
-      options[index] = options[i];
-      options[i] = temp;
-    }
-
-    // create radio buttons A, B, C, D
-    JRadioButton[] radioButtons = new JRadioButton[options.length];
-    for (int i = 0; i < options.length; i++) {
-      radioButtons[i] = new JRadioButton(options[i]);
-      panel.add(radioButtons[i]);
-    }
-
-    // create submit button
-    JButton submitButton = new JButton("Submit");
-    submitButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        // get answer
-        for (int i = 0; i < radioButtons.length; i++) {
-          if (radioButtons[i].isSelected()) {
-            if (radioButtons[i].getText().equals(answer)) {
-              JOptionPane.showMessageDialog(qframe, "Correct!");
-              result = true;
-            } else {
-              JOptionPane.showMessageDialog(qframe, "Incorrect!");
-            }
-          }
-        }
-        // close qframe
-        qframe.dispose();
-
-        isPressed = true;
-      }
-    });
-
-    // add submit button to panel
-    panel.add(submitButton);
-
-    // add panel to qframe
-    qframe.add(panel);
-
-    panel.revalidate();
-
-    // wait for submit button to be pressed
-    while (isPressed == false) {
-      try {
-        Thread.sleep(100);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-
-    // close qframe
-    qframe.dispose();
-
-    return result;
   }
 
   public String getQuestion() {
