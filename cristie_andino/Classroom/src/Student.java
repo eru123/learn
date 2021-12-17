@@ -60,11 +60,11 @@ public class Student extends User {
     frame.setVisible(true);
   }
 
-  public void updateQuizList() {
+  public void updateQuizList(){
     ArrayList<QuizType> quizzesAL = db.getAllQuiz();
     String[] quizzes = new String[quizzesAL.size()];
     for (int i = 0; i < quizzesAL.size(); i++) {
-      quizzes[i] = quizzesAL.get(i).getName();
+      quizzes[i] = quizzesAL.get(i).getName() + " - " + quizzesAL.get(i).getDescription();
     }
     if (quizList != null) {
       quizList.setListData(quizzes);
