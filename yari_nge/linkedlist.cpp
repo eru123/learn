@@ -779,6 +779,16 @@ int main()
 	int m2;
 	char m3, a;
 
+	// get 3 initial values for each list
+	cout << "Input the three integer values of the link: ";
+	for (int i = 0; i < 3; i++){
+		int x;
+		cin >> x;
+		single_insertAtLast(&single, x);
+		double_insertAtLast(&doubly, x);
+		circular_insertAtLast(&circular, x);
+	}
+
 	// run loop while user doesn't choice 4 (exit) in the main menu
 	while (m != 4)
 	{
