@@ -13,6 +13,8 @@ public class Pos {
 	private static JLabel l_quantity;
 	private static JLabel l_receipt;
 	private static JLabel l_customer;
+	private static JLabel l_payment;
+	private static JTextField tf_quantity;
 	private static JRadioButton r_regular;
 	private static JRadioButton r_senior;
 	private static JScrollPane scroll_menu;
@@ -73,6 +75,8 @@ public class Pos {
 		r_senior = new JRadioButton();
 		bt_add = new JButton();
 		bt_checkout = new JButton();
+		l_payment = new JLabel();
+		tf_quantity = new JTextField();
 		scroll_receipt = new JScrollPane();
 		ta_receipt = new JTextArea();
 
@@ -96,6 +100,7 @@ public class Pos {
 		l_quantity.setText("Quantity");
 		l_receipt.setText("Receipt");
 		l_customer.setText("Type of Customer");
+		l_payment.setText("Payment");
 		r_regular.setText("Regular");
 		r_senior.setText("Senior Citizen");
 		bt_add.setText("ADD");
@@ -128,6 +133,8 @@ public class Pos {
 		frame.getContentPane().add(bt_add);
 		frame.getContentPane().add(bt_checkout);
 		frame.getContentPane().add(scroll_receipt);
+		frame.getContentPane().add(l_payment);
+		frame.getContentPane().add(tf_quantity);
 
 		l_menu.setBounds(10, 10, 120, 16);
 		scroll_menu.setBounds(10, 30, 190, 140);
@@ -137,9 +144,12 @@ public class Pos {
 		l_customer.setBounds(10, 220, 190, 16);
 		r_regular.setBounds(30, 240, 170, 25);
 		r_senior.setBounds(30, 265, 170, 25);
-		bt_add.setBounds(20, 320, 70, 25);
-		bt_checkout.setBounds(100, 320, 100, 25);
-		scroll_receipt.setBounds(220, 30, 226, 310);
+
+		bt_add.setBounds(10, 330, 60, 25);
+		bt_checkout.setBounds(80, 330, 120, 25);
+		scroll_receipt.setBounds(210, 30, 226, 310);
+		l_payment.setBounds(10, 300, 190, 16);
+		tf_quantity.setBounds(100, 300, 100, 20);
 
 		frame.pack();
 		frame.setVisible(true);
@@ -150,7 +160,7 @@ public class Pos {
 	protected static void bt_checkoutActionPerformed(ActionEvent evt) {
 		productList.select(-1);
 		qty.setValue(1);
-		
+		double payment = tf_quantity.getText().equals("") ? 0 : Double.parseDouble(tf_quantity.getText());
 		String result = "\n-------------------------\n        RECEIPT\n-------------------------\n";
 		double total = 0;
 		for (int i = 0; i < cart.size(); i++) {
@@ -158,10 +168,15 @@ public class Pos {
 			result += item.product.toString() + " x" + item.quantity +"\n";
 			total += (item.product.price * item.quantity) - (item.product.price * item.quantity * item.discount);
 		}
+		double change = payment - total;
 		result += "\n-------------------------\n";
 		result += "Total: " + total + "\n";
+		result += "Payment: " + payment + "\n";
+		result += "Change: " + change + "\n";
 		result += "-------------------------\n";
 		ta_receipt.setText(result);
+		tf_quantity.setText("");
+		cart.clear();
 	}
 
 	protected static void bt_addActionPerformed(ActionEvent evt) {
