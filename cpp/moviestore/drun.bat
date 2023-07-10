@@ -1,0 +1,1 @@
+cls && g++ dll.cpp -o dll && dll

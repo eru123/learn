@@ -1,0 +1,3 @@
+Honda CB300R 240825.00 SingleCylinder Manual 286.01cc 10L
+Kawasaki Z650 346719.60 Liquidcooled,4strokeParallelTwin Manual	649cc 15L
+Suzuki Katana 650187.00 Liquidcooled,4strokeParallelTwin Manual 999cc 12L

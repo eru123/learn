@@ -1,0 +1,3 @@
+coco,pal,34535,4,2:2,100:10,false,false,1
+coco,pal,34535,4,2:2,100:10,false,false,1
+coco,pal,34535,4,2:2,100:10,false,false,1

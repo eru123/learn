@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+basket = []
+
+print("Catch and eat any of these fruits: ('apple', 'orage', 'mango', 'guava')")
+num_fruits = int(input("How many fruits would you like to catch? "))
+
+print("Choose a fruit to catch. Press A, O, M or G.")
+
+keys = ""
+for i in range(num_fruits):
+    keys += input(f"Fruit {i + 1} of {num_fruits}: ")
+
+for i in keys:
+    if i.upper() == "A":
+        basket.append("apple")
+    elif i.upper() == "O":
+        basket.append("orange")
+    elif i.upper() == "M":
+        basket.append("mango")
+    elif i.upper() == "G":
+        basket.append("guava")
+
+print(f"Your basket now has: {basket}")
+
+# while basket is not empty 
+while basket:
+    eat = input("press E to eat a fruit. ")
+    if eat.upper() == "E":
+        fruit = basket.pop()
+    
+    if basket:
+        print(f"Fruit(s) in the basket: {basket}")
+    else:
+        print("No more fruits")
