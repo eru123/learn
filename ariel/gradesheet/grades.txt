@@ -1,3 +1,0 @@
-74859	Jane Doe	85	89	86
-78965	April May	80	80	81
-14785	Lily Moore	78	96	80

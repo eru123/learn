@@ -1,7 +1,0 @@
-{
-    "files.exclude": {
-        "*.exe": true,
-        "*.o": true,
-        "image*": true
-    }
-}

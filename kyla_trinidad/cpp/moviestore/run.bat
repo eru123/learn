@@ -1,1 +1,0 @@
-cls && g++ Implementation.cpp Main.cpp -o store && store

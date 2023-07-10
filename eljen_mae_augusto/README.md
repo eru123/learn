@@ -1,4 +1,0 @@
-# README
-```
-Intentionally left blank
-```
